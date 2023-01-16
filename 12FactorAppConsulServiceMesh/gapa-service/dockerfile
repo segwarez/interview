@@ -1,0 +1,8 @@
+FROM openjdk:18-slim
+MAINTAINER Kamil Sajdok <kamil.sajdok@segware.com.pl>
+
+ADD target/gapa-service.jar gapa-service.jar
+
+ENTRYPOINT ["java", "-jar", "/gapa-service.jar"]
+
+EXPOSE 8081

@@ -1,0 +1,107 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: gapa-service
+automountServiceAccountToken: true
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceDefaults
+metadata:
+  name: gapa-service
+spec:
+  protocol: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: gapa-service
+  name: gapa-service
+spec:
+  selector:
+    matchLabels:
+      service: gapa-service
+      app: gapa-service
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        consul.hashicorp.com/connect-inject: 'true'
+        consul.hashicorp.com/service-meta-version: 'v1'
+        consul.hashicorp.com/connect-service-upstreams: 'gapa-second:8082, zipkin:9411'
+      labels:
+        service: gapa-service
+        app: gapa-service
+    spec:
+      serviceAccountName: gapa-service
+      containers:
+        - name: gapa-service
+          image: segware/gapa-service:1.0
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "400m"
+            limits:
+              memory: "256Mi"
+              cpu: "800m"
+          ports:
+            - containerPort: 8081
+          env:
+            - name: NAME
+              value: "Gapa-Service"
+            - name: MESSAGE
+              value: "Gapa-Service"
+            - name: UPSTREAM_URIS
+              value: "http://gapa-second"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8081
+            initialDelaySeconds: 15
+            timeoutSeconds: 1
+            periodSeconds: 10
+            failureThreshold: 30
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8081
+            initialDelaySeconds: 5
+            periodSeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gapa-service
+  labels:
+    app: gapa-service
+  annotations:
+    ingress.kubernetes.io/service-upstream: "true"
+spec:
+  selector:
+    app: gapa-service
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8081
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceIntentions
+metadata:
+  name: to-service
+spec:
+  destination:
+    name: gapa-service
+  sources:
+    - name: gapa-kong-proxy
+      permissions:
+        - action: allow
+          http:
+            pathExact: /
+            methods: ['GET']
+        - action: allow
+          http:
+            pathPrefix: /ping
+            methods: ['GET']

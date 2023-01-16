@@ -1,0 +1,6 @@
+
+[
+java:S1854"@Remove this useless assignment to local variable "largeObjects".(”ã½’üÿÿÿÿ
+j
+java:S1215"TDon't try to be smarter than the JVM, remove this call to run the garbage collector.(Ì°¬“
+S	java:S106"9Replace this use of System.out or System.err by a logger.(¢Èšœùÿÿÿÿ

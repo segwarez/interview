@@ -1,0 +1,10 @@
+deployment:
+  serviceAccount:
+    name: gapa-kong-proxy
+   
+postgresql:
+  enabled: true
+  
+podAnnotations:
+ consul.hashicorp.com/connect-inject: "true"
+ consul.hashicorp.com/transparent-proxy-exclude-inbound-ports: 8000,8443

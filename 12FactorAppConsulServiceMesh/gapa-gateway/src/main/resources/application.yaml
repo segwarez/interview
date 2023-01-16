@@ -1,0 +1,77 @@
+server:
+  port: 8080
+
+dev:
+  enabled: true
+
+spring:
+  application:
+    name: gapa-gateway
+
+  security:
+    oauth2:
+      client:
+        registration:
+          gapa-keycloak:
+            provider: keycloak
+            client-id: Gapa
+            client-secret: d9d13ee5-f0f7-41aa-8f3b-d362c8682a16
+            authorization-grant-type: authorization_code
+            redirect-uri: "http://localhost:8080/login/oauth2/code/gapa-keycloak"
+            scope: "gapa:edit, gapa:ping, gapa:pong, gapa:read"
+
+        provider:
+          keycloak:
+            token-uri: http://localhost:8085/auth/realms/Gapa/protocol/openid-connect/token
+            authorization-uri: http://localhost:8085/auth/realms/Gapa/protocol/openid-connect/auth
+            user-info-uri: http://localhost:8085/auth/realms/Gapa/protocol/openid-connect/userinfo
+            jwk-set-uri: http://localhost:8085/auth/realms/Gapa/protocol/openid-connect/certs
+            user-name-attribute: preferred_username
+
+
+  cloud:
+    gateway:
+      default-filters:
+        - TokenRelay
+      routes:
+        - id: gapa-ping-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/service/**
+          filters:
+            - RewritePath=/service/(?<segment>/?.*), /$\{segment}
+            - RemoveRequestHeader=Cookie
+        - id: gapa-crud-service
+          uri: http://localhost:8083
+          predicates:
+            - Path=/crud/**
+          filters:
+            - RewritePath=/crud/(?<segment>/?.*), /$\{segment}
+            - RemoveRequestHeader=Cookie
+        - id: openapi
+          uri: http://localhost:${server.port}
+          predicates:
+            - Path=/v3/api-docs/**
+          filters:
+            - RewritePath=/v3/api-docs/(?<segment>.*), /$\{segment}/v3/api-docs
+
+springdoc:
+  swagger-ui:
+    oauth:
+      use-pkce-with-authorization-code-grant: true
+      client-secret: d9d13ee5-f0f7-41aa-8f3b-d362c8682a16
+      client-id: Gapa
+      scopes: "gapa:edit, gapa:ping, gapa:pong, gapa:read"
+    path: "/"
+    urls:
+      - name: service
+        url: /v3/api-docs/service
+      - name: crud
+        url: /v3/api-docs/crud
+
+management:
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: health, prometheus, metrics

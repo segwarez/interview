@@ -1,0 +1,8 @@
+FROM openjdk:18-slim
+MAINTAINER Kamil Sajdok <kamil.sajdok@segware.com.pl>
+
+ADD target/gapa-crud.jar gapa-crud.jar
+
+ENTRYPOINT ["java", "-jar", "/gapa-crud.jar"]
+
+EXPOSE 8083

@@ -1,0 +1,8 @@
+FROM openjdk:18-slim
+MAINTAINER Kamil Sajdok <kamil.sajdok@segware.com.pl>
+
+ADD target/gapa-second.jar gapa-second.jar
+
+ENTRYPOINT ["java", "-jar", "/gapa-second.jar"]
+
+EXPOSE 8082

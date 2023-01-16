@@ -1,0 +1,69 @@
+version: '3.9'
+
+volumes:
+  postgres_data:
+    driver: local
+
+services:
+  gapa-postgres:
+    image: postgres:latest
+    container_name: gapa-postgres
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: gapa
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - '5432:5432'
+  gapa-keycloak:
+    image: jboss/keycloak:latest
+    container_name: gapa-keycloak
+    restart: always
+    volumes:
+      - ./keycloak/gapa-realm.json:/opt/jboss/keycloak/imports/gapa-realm.json
+    environment:
+      KEYCLOAK_IMPORT: /opt/jboss/keycloak/imports/gapa-realm.json -Dkeycloak.profile.feature.upload_scripts=enabled
+      DB_VENDOR: POSTGRES
+      DB_ADDR: gapa-postgres
+      DB_DATABASE: gapa
+      DB_USER: postgres
+      DB_SCHEMA: public
+      DB_PASSWORD: password
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+    ports:
+      - '8085:8080'
+    depends_on:
+      - gapa-postgres
+  gapa-zipkin:
+    image: openzipkin/zipkin
+    container_name: gapa-zipkin
+    restart: always
+    environment:
+      - STORAGE_TYPE=mem
+    ports:
+      - 9411:9411
+  gapa-zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    container_name: gapa-zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - 22181:2181
+  gapa-kafka:
+    image: confluentinc/cp-kafka:latest
+    container_name: gapa-kafka
+    depends_on:
+      - gapa-zookeeper
+    ports:
+      - 29092:29092
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: gapa-zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://gapa-kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1

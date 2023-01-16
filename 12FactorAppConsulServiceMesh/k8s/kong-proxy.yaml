@@ -1,0 +1,29 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: rate-limit
+plugin: rate-limiting
+config:
+  minute: 30
+  policy: local
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: route-to-service
+  annotations:
+    kubernetes.io/ingress.class: kong
+    konghq.com/plugins: rate-limit
+    konghq.com/preserve-host: "false"
+    konghq.com/strip-path: "true"
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /service
+            pathType: Prefix
+            backend:
+              service:
+                name: gapa-service
+                port:
+                  number: 80

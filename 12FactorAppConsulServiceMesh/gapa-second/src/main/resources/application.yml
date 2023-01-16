@@ -1,0 +1,31 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: gapa-second
+  security:
+    oauth2:
+      resourceserver:
+        opaquetoken:
+          introspection-uri: http://localhost:8085/auth/realms/Gapa/protocol/openid-connect/token/introspect
+          client-id: Gapa
+          client-secret: d9d13ee5-f0f7-41aa-8f3b-d362c8682a16
+  datasource:
+    url: jdbc:postgresql://localhost:5432/gapa
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: password
+
+  kafka:
+    bootstrap-servers: localhost:29092
+
+springdoc:
+  packages-to-scan: pl.com.segware.gapa.second.resources
+
+management:
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: health, prometheus, metrics

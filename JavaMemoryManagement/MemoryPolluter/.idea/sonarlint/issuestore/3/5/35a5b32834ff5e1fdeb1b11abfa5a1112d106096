@@ -1,0 +1,10 @@
+
+O
+java:S1854"9Remove this useless assignment to local variable "array".(‚’þØ
+S	java:S106"9Replace this use of System.out or System.err by a logger.(Ö•è¦øÿÿÿÿ
+@
+java:S1481"*Remove this unused "array" local variable.(‚’þØ
+M	java:S106
+"9Replace this use of System.out or System.err by a logger.(ÎˆÖ
+0
+java:S1220""Move this file to a named package.

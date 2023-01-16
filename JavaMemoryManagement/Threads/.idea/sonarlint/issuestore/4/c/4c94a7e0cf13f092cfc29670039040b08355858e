@@ -1,0 +1,13 @@
+
+L
+java:S3740"/Provide the parametrized type for this generic.(¼Š»å8êÞ³³Ž/
+0
+java:S1220""Move this file to a named package.
+U	java:S106"9Replace this use of System.out or System.err by a logger.(î¹óÒ8ÒÍ‘«Ž/
+U	java:S106"9Replace this use of System.out or System.err by a logger.(øÖÉ­8¢¡ý²Ž/
+{
+java:S2142"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(ä ¹€8š£„³Ž/
+U	java:S106"9Replace this use of System.out or System.err by a logger.(ŠŠªŒ8¢¡ý²Ž/
+U	java:S106"9Replace this use of System.out or System.err by a logger.(Œæ·¿8„›ÿ²Ž/
+U	java:S106"9Replace this use of System.out or System.err by a logger.(¥ÄøÌ8„›ÿ²Ž/
+U	java:S106"9Replace this use of System.out or System.err by a logger.(ž÷ˆÍ8Ðô˜³Ž/

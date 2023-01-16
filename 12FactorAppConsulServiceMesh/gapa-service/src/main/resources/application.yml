@@ -1,0 +1,51 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: gapa-service
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jws-algorithm: ES256
+          jwk-set-uri: http://localhost:8085/auth/realms/Gapa/protocol/openid-connect/certs
+          issuer-uri: http://localhost:8085/auth/realms/Gapa
+          audience: Gapa
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/gapa
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: password
+
+  kafka:
+    bootstrap-servers: localhost:29092
+
+springdoc:
+  packages-to-scan: pl.com.segware.gapa.service.resources
+
+resilience4j:
+  retry:
+    instances:
+      pingRetrier:
+        maxRetryAttempts: 3
+        waitDuration: 2s
+  circuitbreaker:
+    instances:
+      pingBreaker:
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 5
+        waitDurationInOpenState: 1000ms
+  bulkhead:
+    instances:
+      pingBulkhead:
+        maxConcurrentCalls: 2
+        maxWaitDuration: 2s
+
+management:
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: health, prometheus, metrics

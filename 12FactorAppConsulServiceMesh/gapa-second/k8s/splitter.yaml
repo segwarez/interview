@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: gapa-second
+    release: v2
+  name: gapa-second-v2
+spec:
+  selector:
+    matchLabels:
+      service: gapa-second
+      app: gapa-second
+      release: v2
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        consul.hashicorp.com/connect-inject: 'true'
+        consul.hashicorp.com/service-meta-version: 'v2'
+        consul.hashicorp.com/connect-service-upstreams: 'zipkin:9411'
+      labels:
+        service: gapa-second
+        app: gapa-second
+        release: v2
+    spec:
+      serviceAccountName: gapa-second
+      containers:
+      - name: gapa-second
+        image: segware/gapa-second:1.0
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "400m"
+          limits:
+            memory: "256Mi"
+            cpu: "800m"
+        ports:
+        - containerPort: 8082
+        env:
+          - name: NAME
+            value: "Second (v2)"
+          - name: MESSAGE
+            value: "Second (v2)"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8082
+          initialDelaySeconds: 15
+          timeoutSeconds: 1
+          periodSeconds: 10
+          failureThreshold: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8082
+          initialDelaySeconds: 5
+          periodSeconds: 5
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceResolver
+metadata:
+  name: gapa-second
+spec:
+  defaultSubset: v1
+  subsets:
+    v1:
+      filter: "Service.Meta.version == v1"
+    v2:
+      filter: "Service.Meta.version == v2"
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceSplitter
+metadata:
+  name: gapa-second
+spec:
+  splits:
+    - weight: 50
+      serviceSubset: v1
+    - weight: 50
+      serviceSubset: v2

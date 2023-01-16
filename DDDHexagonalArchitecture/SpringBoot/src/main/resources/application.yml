@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: DDDHexagonalArchitectureSpring
+#  cassandra:
+#    contact-points: 127.0.0.1
+#    keyspace-name: hexagonal
+#    port: 9042
+#    local-datacenter: datacenter1
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      username: admin
+      password: admin
+      database: hexagonal
