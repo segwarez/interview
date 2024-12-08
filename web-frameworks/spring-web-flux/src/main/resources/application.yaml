@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: Spring WebFlux
+
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/testdb
+    username: postgres
+    password: postgres
+
+management:
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: health, metrics, prometheus
