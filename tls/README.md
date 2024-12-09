@@ -55,5 +55,3 @@ curl -X GET --cacert rootCA.crt --cert client.crt --key client.key --pass test12
 ```
 
 ## Chain of trust
-
-![screenshot](chain-of-trust.png)
