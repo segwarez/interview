@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: payment
+
+  ssl:
+    bundle:
+      jks:
+        server:
+          reload-on-update: true
+          keystore:
+            location: classpath:server_keystore.jks
+            password: test123
+            type: JKS
+          truststore:
+            location: classpath:server_truststore.jks
+            password: test123
+            type: JKS
+server:
+  port: 8443
+  ssl:
+    client-auth: need
+    bundle: server
+
