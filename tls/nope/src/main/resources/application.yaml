@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: nope
+
+  ssl:
+    bundle:
+      jks:
+        nope-bundle:
+          reload-on-update: true
+          keystore:
+            location: file:nope_wide_keystore.jks
+            password: test123
+            type: JKS
+          truststore:
+            location: file:nope_wide_truststore.jks
+            password: test123
+            type: JKS
+server:
+  port: 8445
+  ssl:
+    bundle: nope-bundle
+

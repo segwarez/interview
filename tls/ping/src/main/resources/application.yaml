@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: ping
+
+  ssl:
+    bundle:
+      jks:
+        ping-bundle:
+          reload-on-update: true
+          keystore:
+            location: file:ping_wide_keystore.jks
+            password: test123
+            type: JKS
+          truststore:
+            location: file:ping_wide_truststore.jks
+            password: test123
+            type: JKS
+server:
+  port: 8443
+  ssl:
+    bundle: ping-bundle
+
