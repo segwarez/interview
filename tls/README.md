@@ -22,7 +22,7 @@ DNS.1 = api.segwarez.com
 ```
 openssl x509 -req -CA rootCA.crt -CAkey rootCA.key -in server.csr -out server.crt -days 365 -CAcreateserial -extfile server.ext -passin pass:test123
 ```
-5. Export key and cert to P12 file
+5. Create P12 server bundle
 ```
 openssl pkcs12 -export -out server.p12 -name "api.segwarez.com" -inkey server.key -in server.crt -passin pass:test123 -password pass:test123
 ```
@@ -42,7 +42,7 @@ openssl req -new -newkey rsa:4096 -keyout client.key -out client.csr -passout pa
 ```
 openssl x509 -req -CA rootCA.crt -CAkey rootCA.key -in client.csr -out client.crt -days 365 -CAcreateserial -passin pass:test123
 ```
-10. Export key and cert to P12 file
+10. Create P12 client bundle
 ```
 openssl pkcs12 -export -out client.p12 -name "client" -inkey client.key -in client.crt -passin pass:test123 -password pass:test123
 ```
