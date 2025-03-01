@@ -1,8 +1,8 @@
-package com.segwarez.vertxrs.web;
+package com.segwarez.vertxrx.web;
 
-import com.segwarez.vertxrs.service.Pagination;
-import com.segwarez.vertxrs.service.SortDirection;
-import com.segwarez.vertxrs.service.SortOrder;
+import com.segwarez.vertxrx.service.Pagination;
+import com.segwarez.vertxrx.service.SortDirection;
+import com.segwarez.vertxrx.service.SortOrder;
 import io.vertx.rxjava3.ext.web.RoutingContext;
 
 import java.util.ArrayList;

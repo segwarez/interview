@@ -1,4 +1,4 @@
-package com.segwarez.vertxrs.configuration;
+package com.segwarez.vertxrx.configuration;
 
 import io.vertx.pgclient.PgConnectOptions;
 import io.vertx.rxjava3.core.Vertx;

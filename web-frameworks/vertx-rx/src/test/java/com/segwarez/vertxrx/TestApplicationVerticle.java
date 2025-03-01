@@ -1,4 +1,4 @@
-package com.segwarez.vertxrs;
+package com.segwarez.vertxrx;
 
 import io.vertx.core.Vertx;
 import io.vertx.junit5.VertxExtension;

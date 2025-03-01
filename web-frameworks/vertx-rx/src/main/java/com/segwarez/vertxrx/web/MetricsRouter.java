@@ -1,4 +1,4 @@
-package com.segwarez.vertxrs.web;
+package com.segwarez.vertxrx.web;
 
 import io.vertx.rxjava3.ext.web.Router;
 import io.vertx.rxjava3.micrometer.PrometheusScrapingHandler;

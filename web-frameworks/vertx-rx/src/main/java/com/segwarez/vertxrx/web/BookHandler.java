@@ -1,8 +1,8 @@
-package com.segwarez.vertxrs.web;
+package com.segwarez.vertxrx.web;
 
-import com.segwarez.vertxrs.service.BookService;
-import com.segwarez.vertxrs.web.request.CreateBookRequest;
-import com.segwarez.vertxrs.web.request.UpdateBookRequest;
+import com.segwarez.vertxrx.service.BookService;
+import com.segwarez.vertxrx.web.request.CreateBookRequest;
+import com.segwarez.vertxrx.web.request.UpdateBookRequest;
 import io.vertx.rxjava3.ext.web.RoutingContext;
 import lombok.RequiredArgsConstructor;
 

@@ -1,6 +1,6 @@
-package com.segwarez.vertxrs.web.validation;
+package com.segwarez.vertxrx.web.validation;
 
-import com.segwarez.vertxrs.web.ResponseWrapper;
+import com.segwarez.vertxrx.web.ResponseWrapper;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.vertx.ext.web.validation.BadRequestException;
 import io.vertx.ext.web.validation.BodyProcessorException;

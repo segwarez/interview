@@ -1,4 +1,4 @@
-package com.segwarez.vertxrs.configuration;
+package com.segwarez.vertxrx.configuration;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -1,4 +1,4 @@
-package com.segwarez.vertxrs.web;
+package com.segwarez.vertxrx.web;
 
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.vertx.core.json.Json;

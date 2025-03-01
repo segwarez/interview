@@ -1,13 +1,13 @@
-package com.segwarez.vertxrs;
+package com.segwarez.vertxrx;
 
-import com.segwarez.vertxrs.configuration.DatabaseConfig;
-import com.segwarez.vertxrs.web.BookHandler;
-import com.segwarez.vertxrs.web.BookRouter;
-import com.segwarez.vertxrs.web.MetricsRouter;
-import com.segwarez.vertxrs.web.validation.BookValidationHandler;
-import com.segwarez.vertxrs.web.validation.GlobalErrorHandler;
-import com.segwarez.vertxrs.service.BookService;
-import com.segwarez.vertxrs.repository.BookRepository;
+import com.segwarez.vertxrx.configuration.DatabaseConfig;
+import com.segwarez.vertxrx.web.BookHandler;
+import com.segwarez.vertxrx.web.BookRouter;
+import com.segwarez.vertxrx.web.MetricsRouter;
+import com.segwarez.vertxrx.web.validation.BookValidationHandler;
+import com.segwarez.vertxrx.web.validation.GlobalErrorHandler;
+import com.segwarez.vertxrx.service.BookService;
+import com.segwarez.vertxrx.repository.BookRepository;
 import io.micrometer.core.instrument.Meter;
 import io.micrometer.core.instrument.config.MeterFilter;
 import io.micrometer.core.instrument.distribution.DistributionStatisticConfig;

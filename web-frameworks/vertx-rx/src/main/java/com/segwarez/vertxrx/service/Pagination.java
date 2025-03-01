@@ -1,4 +1,4 @@
-package com.segwarez.vertxrs.service;
+package com.segwarez.vertxrx.service;
 
 import lombok.Data;
 

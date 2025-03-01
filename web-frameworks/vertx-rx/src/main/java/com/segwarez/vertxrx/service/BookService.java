@@ -1,6 +1,6 @@
-package com.segwarez.vertxrs.service;
+package com.segwarez.vertxrx.service;
 
-import com.segwarez.vertxrs.repository.BookRepository;
+import com.segwarez.vertxrx.repository.BookRepository;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Maybe;
 import io.reactivex.rxjava3.core.Single;

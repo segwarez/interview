@@ -1,6 +1,6 @@
-package com.segwarez.vertxrs.web;
+package com.segwarez.vertxrx.web;
 
-import com.segwarez.vertxrs.web.validation.BookValidationHandler;
+import com.segwarez.vertxrx.web.validation.BookValidationHandler;
 import io.vertx.rxjava3.ext.web.Router;
 import io.vertx.rxjava3.ext.web.handler.BodyHandler;
 import lombok.RequiredArgsConstructor;

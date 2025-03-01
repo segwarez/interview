@@ -1,8 +1,8 @@
-package com.segwarez.vertxrs.repository;
+package com.segwarez.vertxrx.repository;
 
-import com.segwarez.vertxrs.service.Book;
-import com.segwarez.vertxrs.service.Genre;
-import com.segwarez.vertxrs.service.Pagination;
+import com.segwarez.vertxrx.service.Book;
+import com.segwarez.vertxrx.service.Genre;
+import com.segwarez.vertxrx.service.Pagination;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Maybe;
 import io.reactivex.rxjava3.core.Single;

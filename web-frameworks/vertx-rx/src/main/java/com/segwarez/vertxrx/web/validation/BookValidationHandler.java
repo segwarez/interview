@@ -1,6 +1,6 @@
-package com.segwarez.vertxrs.web.validation;
+package com.segwarez.vertxrx.web.validation;
 
-import com.segwarez.vertxrs.service.Genre;
+import com.segwarez.vertxrx.service.Genre;
 import io.vertx.json.schema.SchemaRouterOptions;
 import io.vertx.json.schema.common.dsl.ObjectSchemaBuilder;
 import io.vertx.rxjava3.ext.web.validation.ValidationHandler;
