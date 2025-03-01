@@ -1,0 +1,25 @@
+package com.segwarez.rules;
+
+import com.segwarez.ruleevaluator.domain.model.ValidationDTO;
+import com.segwarez.ruleevaluator.domain.model.Order;
+import com.segwarez.ruleevaluator.domain.model.Item;
+
+rule "capacitySum"
+    when
+            $dto : ValidationDTO($order: order, $validationErrors: validationErrors)
+            Order($items: items) from $order
+    		$capacitySum : Integer(this > 10) from accumulate (
+                            Item($capacity : capacity) from $items;
+                            sum( $capacity ))
+        then
+            $validationErrors.add("BREACHED - capacitySum");
+end;
+
+rule "nameAndCapacity"
+    when
+            $dto : ValidationDTO($order: order, $validationErrors: validationErrors)
+            Order($items: items) from $order
+            Item(capacity > 5 && name=='C') from $items
+        then
+            $validationErrors.add("BREACHED - nameAndCapacity");
+end;
