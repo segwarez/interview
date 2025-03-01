@@ -8,11 +8,11 @@ spring:
         pong-bundle:
           reload-on-update: true
           keystore:
-            location: file:pong_wide_keystore.jks
+            location: file:pong_keystore.jks
             password: test123
             type: JKS
           truststore:
-            location: file:pong_wide_truststore.jks
+            location: file:pong_truststore.jks
             password: test123
             type: JKS
 server:

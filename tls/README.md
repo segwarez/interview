@@ -49,9 +49,9 @@ openssl pkcs12 -export -out client.p12 -name "client" -inkey client.key -in clie
 
 ## Testing
 ```
-curl -X GET https://api.segwarez.com:8443/ping -v
-curl -X GET --cacert rootCA.crt https://api.segwarez.com:8443/ping -v
-curl -X GET --cacert rootCA.crt --cert client.crt --key client.key --pass test123 https://api.segwarez.com:8443/ping -v
+curl -X GET https://api.segwarez.com:8444/pong -v
+curl -X GET --cacert rootCA.crt https://api.segwarez.com:8444/pong -v
+curl -X GET --cacert rootCA.crt --cert client.crt --key client.key --pass test123 https://api.segwarez.com:8444/pong -v
 ```
 
 ## Chain of trust

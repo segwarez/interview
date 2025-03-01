@@ -8,15 +8,17 @@ spring:
         ping-bundle:
           reload-on-update: true
           keystore:
-            location: file:ping_wide_keystore.jks
+            location: file:ping_keystore.jks
             password: test123
             type: JKS
           truststore:
-            location: file:ping_wide_truststore.jks
+            location: file:ping_truststore.jks
             password: test123
             type: JKS
 server:
-  port: 8443
-  ssl:
-    bundle: ping-bundle
+  port: 8081
+
+pong:
+  host: api.segwarez.com
+  port: 8444
 
