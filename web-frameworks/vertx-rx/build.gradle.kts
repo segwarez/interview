@@ -17,11 +17,11 @@ repositories {
 val vertxVersion = "4.5.7"
 val ongresScramVersion = "2.1"
 val micrometerPrometheusVersion = "1.12.5"
-val jacksonDatabindVersion = "2.17.1"
+val jacksonVersion = "2.17.1"
 val lombokVersion = "1.18.32"
 val junitJupiterVersion = "5.9.1"
 
-val mainVerticleName = "com.segwarez.vertxrs.ApplicationVerticle"
+val mainVerticleName = "com.segwarez.vertxrx.ApplicationVerticle"
 val launcherClassName = "io.vertx.core.Launcher"
 
 val watchForChange = "src/**/*"
@@ -41,7 +41,7 @@ dependencies {
     implementation("com.ongres.scram:client:$ongresScramVersion")
     implementation("io.vertx:vertx-micrometer-metrics")
     implementation("io.micrometer:micrometer-registry-prometheus:$micrometerPrometheusVersion")
-    implementation("com.fasterxml.jackson.core:$jacksonDatabindVersion")
+    implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
     compileOnly("org.projectlombok:lombok:$lombokVersion")
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
     testImplementation("io.vertx:vertx-junit5")
