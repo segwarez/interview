@@ -1,6 +1,6 @@
 spring:
   application:
-    name: Spring WebFlux
+    name: spring-web-flux
 
   r2dbc:
     url: r2dbc:postgresql://localhost:5432/testdb
