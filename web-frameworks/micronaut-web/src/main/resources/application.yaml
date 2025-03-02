@@ -5,9 +5,17 @@ micronaut:
   i18n:
     default-locale: en_GB
 
+  metrics:
+    enabled: true
+
 datasources:
   default:
     url: jdbc:postgresql://localhost:5432/testdb
     username: postgres
     password: postgres
     driverClassName: org.postgresql.Driver
+
+endpoints:
+  prometheus:
+    sensitive: false
+
