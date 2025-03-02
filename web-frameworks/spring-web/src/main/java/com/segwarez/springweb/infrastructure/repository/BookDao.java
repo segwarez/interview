@@ -28,7 +28,7 @@ public class BookDao implements BookRepository {
                 pagination.getPageNumber(),
                 pagination.getPageSize(),
                 Sort.by(sort));
-        return jpaBookRepository.findBy(pageRequest).stream().map(BookEntity::toBook).toList();
+        return jpaBookRepository.findAll(pageRequest).stream().map(BookEntity::toBook).toList();
     }
 
     @Override

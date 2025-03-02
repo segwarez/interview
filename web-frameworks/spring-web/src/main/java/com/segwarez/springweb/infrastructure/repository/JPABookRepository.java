@@ -10,8 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface JPABookRepository extends CrudRepository<BookEntity, UUID>,PagingAndSortingRepository<BookEntity, UUID> {
-    List<BookEntity> findBy(PageRequest pageRequest);
+public interface JPABookRepository extends CrudRepository<BookEntity, UUID>, PagingAndSortingRepository<BookEntity, UUID> {
 
     List<BookEntity> findByTitleContaining(String title, PageRequest pageRequest);
 
