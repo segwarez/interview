@@ -1,6 +1,6 @@
 spring:
   application:
-    name: Spring Web
+    name: spring-web
 
   web:
     locale: en_GB

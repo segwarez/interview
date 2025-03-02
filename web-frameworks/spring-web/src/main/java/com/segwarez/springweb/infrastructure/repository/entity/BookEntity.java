@@ -1,4 +1,4 @@
-package com.segwarez.springweb.infrastracture.repository.entity;
+package com.segwarez.springweb.infrastructure.repository.entity;
 
 import com.segwarez.springweb.domain.Book;
 import com.segwarez.springweb.domain.Genre;

@@ -1,9 +1,9 @@
-package com.segwarez.springweb.infrastracture.repository;
+package com.segwarez.springweb.infrastructure.repository;
 
 import com.segwarez.springweb.domain.Book;
 import com.segwarez.springweb.domain.Pagination;
 import com.segwarez.springweb.domain.repository.BookRepository;
-import com.segwarez.springweb.infrastracture.repository.entity.BookEntity;
+import com.segwarez.springweb.infrastructure.repository.entity.BookEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
