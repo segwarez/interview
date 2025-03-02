@@ -1,0 +1,13 @@
+micronaut:
+  application:
+    name: micronaut-web
+
+  i18n:
+    default-locale: en_GB
+
+datasources:
+  default:
+    url: jdbc:postgresql://localhost:5432/testdb
+    username: postgres
+    password: postgres
+    driverClassName: org.postgresql.Driver
