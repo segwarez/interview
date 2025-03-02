@@ -53,5 +53,3 @@ curl -X GET https://api.segwarez.com:8444/pong -v
 curl -X GET --cacert rootCA.crt https://api.segwarez.com:8444/pong -v
 curl -X GET --cacert rootCA.crt --cert client.crt --key client.key --pass test123 https://api.segwarez.com:8444/pong -v
 ```
-
-## Chain of trust
