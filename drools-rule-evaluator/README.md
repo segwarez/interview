@@ -16,12 +16,6 @@ This project evaluates business rules using the Drools engine. It defines a set 
     - **When**: An item has a capacity greater than 5 and the name is 'C'.
     - **Then**: Adds a validation error: "BREACHED - nameAndCapacity".
 
-## Project Structure
-
-- **ValidationDTO**: Contains the order and the list of validation errors.
-- **Order**: Represents an order which includes a collection of items.
-- **Item**: Represents an item with properties such as `capacity` and `name`.
-
 ## Usage
 
 To evaluate the rules, you can make a POST request to the `/order` endpoint. This endpoint accepts an `Order` object, which contains a list of `Item` objects. The request will trigger the Drools rules, and if any validation errors occur, they will be added to the `ValidationDTO`.
@@ -51,13 +45,3 @@ Content-Type: application/json
   ]
 }
 ```
-
-## Dependencies
-
-- Java 21
-- Spring Web 3.4.3
-- Drools 8.41.0.Final
-
-## License
-
-This project is licensed under the MIT License.
