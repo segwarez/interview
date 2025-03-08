@@ -1,4 +1,4 @@
-package com.segwarez.springwebflux.config;
+package com.segwarez.springwebflux.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.web.ReactivePageableHandlerMethodArgumentResolver;

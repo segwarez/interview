@@ -89,7 +89,7 @@ public class BookController {
         return HttpResponse.noContent();
     }
 
-    @Delete()
+    @Delete
     public HttpResponse<Void> deleteAllBooks() {
         bookService.deleteAll();
         return HttpResponse.noContent();

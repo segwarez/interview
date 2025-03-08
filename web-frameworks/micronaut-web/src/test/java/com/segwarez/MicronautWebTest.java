@@ -9,7 +9,6 @@ import jakarta.inject.Inject;
 
 @MicronautTest
 class MicronautWebTest {
-
     @Inject
     EmbeddedApplication<?> application;
 
@@ -17,5 +16,4 @@ class MicronautWebTest {
     void testItWorks() {
         Assertions.assertTrue(application.isRunning());
     }
-
 }
