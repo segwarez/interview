@@ -56,8 +56,8 @@ public class BookValidationHandler {
 
     private ObjectSchemaBuilder buildCreateBodySchemaBuilder() {
         return objectSchema()
-            .requiredProperty("title", stringSchema().with(minLength(1)).with(maxLength(60)))
-            .requiredProperty("author", stringSchema().with(minLength(1)).with(maxLength(60)))
+            .requiredProperty("title", stringSchema().with(minLength(1)).with(maxLength(255)))
+            .requiredProperty("author", stringSchema().with(minLength(1)).with(maxLength(255)))
             .requiredProperty("genre", enumSchema(Arrays.stream(Genre.values()).map(Enum::toString).toArray()))
             .requiredProperty("description", stringSchema().with(maxLength(1000)).nullable());
     }
@@ -67,7 +67,7 @@ public class BookValidationHandler {
             .requiredProperty("title", stringSchema().with(minLength(1)).with(maxLength(255)))
             .requiredProperty("author", stringSchema().with(minLength(1)).with(maxLength(255)))
             .requiredProperty("genre", enumSchema(Arrays.stream(Genre.values()).map(Enum::toString).toArray()))
-            .requiredProperty("description", stringSchema().with(minLength(1)).with(maxLength(255)).nullable())
+            .requiredProperty("description", stringSchema().with(minLength(1)).with(maxLength(1000)).nullable())
             .requiredProperty("published", booleanSchema());
     }
 
