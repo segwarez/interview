@@ -1,0 +1,33 @@
+meta {
+  name: updateBook
+  type: http
+  seq: 5
+}
+
+put {
+  url: http://localhost:8080/books/:bookId
+  body: json
+  auth: none
+}
+
+params:path {
+  bookId: 
+}
+
+body:json {
+  {
+    "title": "{{title}}",
+    "author": "{{author}}",
+    "genre": "{{genre}}",
+    "description": "{{description}}",
+    "published": {{published}}
+  }
+}
+
+vars:pre-request {
+  title: 
+  author: 
+  genre: 
+  description: 
+  published: 
+}

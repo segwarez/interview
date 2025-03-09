@@ -1,0 +1,18 @@
+meta {
+  name: getAllBooks
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:8080/books
+  body: none
+  auth: none
+}
+
+params:query {
+  ~title: 
+  ~page: 
+  ~size: 
+  ~sort: 
+}

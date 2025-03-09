@@ -1,4 +1,4 @@
-package com.segwarez.springweb.infrastracture.configuration;
+package com.segwarez.springweb.infrastructure.configuration;
 
 import com.segwarez.springweb.SpringWebApplication;
 import com.segwarez.springweb.domain.repository.BookRepository;

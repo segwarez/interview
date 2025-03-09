@@ -3,10 +3,8 @@ package com.segwarez.springweb.application.rest;
 import com.segwarez.springweb.application.request.CreateBookRequest;
 import com.segwarez.springweb.application.request.UpdateBookRequest;
 import com.segwarez.springweb.domain.Book;
-import com.segwarez.springweb.domain.Pagination;
-import com.segwarez.springweb.domain.SortDirection;
-import com.segwarez.springweb.domain.SortOrder;
 import com.segwarez.springweb.domain.service.BookService;
+import com.segwarez.springweb.infrastructure.configuration.Pagination;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -24,41 +22,28 @@ import java.util.UUID;
 @RequestMapping("/books")
 public class BookController {
     private final BookService bookService;
+    private final Pagination pagination;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Book>> getAllBooks(
             @RequestParam(required = false) String title,
             @PageableDefault(size = 20) Pageable pageable) {
-        var pagination = new Pagination(
-                pageable.getPageNumber(),
-                pageable.getPageSize(),
-                pageable.getSort().stream()
-                        .map(order -> new SortOrder(
-                                order.getProperty(),
-                                SortDirection.valueOf(order.getDirection().toString())))
-                        .toList());
-        if (title == null) return ResponseEntity.ok(bookService.findAll(pagination));
-        return ResponseEntity.ok(bookService.findByTitleContaining(title, pagination));
+        pagination.setPageable(pageable);
+        if (title == null) return ResponseEntity.ok(bookService.findAll());
+        return ResponseEntity.ok(bookService.findByTitleContaining(title));
     }
 
     @GetMapping(value = "/published", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Book>> findPublishedBooks(@PageableDefault(size = 20) Pageable pageable) {
-        var pagination = new Pagination(
-                pageable.getPageNumber(),
-                pageable.getPageSize(),
-                pageable.getSort().stream()
-                        .map(order -> new SortOrder(
-                                order.getProperty(),
-                                SortDirection.valueOf(order.getDirection().toString())))
-                        .toList());
-        return ResponseEntity.ok(bookService.findByPublished(true, pagination));
+        pagination.setPageable(pageable);
+        return ResponseEntity.ok(bookService.findByPublished(true));
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Book> getBookById(@PathVariable("id") UUID id) {
         var optionalBook = bookService.findById(id);
-        if (optionalBook.isEmpty()) return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(optionalBook.get());
+        return optionalBook.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -81,8 +66,8 @@ public class BookController {
                 request.getGenre(),
                 request.getDescription(),
                 request.isPublished());
-        if (optionalBook.isEmpty()) return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(optionalBook.get());
+        return optionalBook.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping(value = "/{id}")

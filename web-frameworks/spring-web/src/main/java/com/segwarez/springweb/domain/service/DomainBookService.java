@@ -3,7 +3,6 @@ package com.segwarez.springweb.domain.service;
 
 import com.segwarez.springweb.domain.Book;
 import com.segwarez.springweb.domain.Genre;
-import com.segwarez.springweb.domain.Pagination;
 import com.segwarez.springweb.domain.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -15,16 +14,16 @@ import java.util.UUID;
 public class DomainBookService implements BookService {
     private final BookRepository bookRepository;
 
-    public List<Book> findAll(Pagination pagination) {
-        return bookRepository.findAll(pagination);
+    public List<Book> findAll() {
+        return bookRepository.findAll();
     }
 
-    public List<Book> findByTitleContaining(String title, Pagination pagination) {
-        return bookRepository.findByTitleContaining(title, pagination);
+    public List<Book> findByTitleContaining(String title) {
+        return bookRepository.findByTitleContaining(title);
     }
 
-    public List<Book> findByPublished(boolean published, Pagination pagination) {
-        return bookRepository.findByPublished(published, pagination);
+    public List<Book> findByPublished(boolean published) {
+        return bookRepository.findByPublished(published);
     }
 
     public Optional<Book> findById(UUID id) {

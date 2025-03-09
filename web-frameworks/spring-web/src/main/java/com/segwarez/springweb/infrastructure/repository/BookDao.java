@@ -1,12 +1,10 @@
 package com.segwarez.springweb.infrastructure.repository;
 
 import com.segwarez.springweb.domain.Book;
-import com.segwarez.springweb.domain.Pagination;
 import com.segwarez.springweb.domain.repository.BookRepository;
+import com.segwarez.springweb.infrastructure.configuration.Pagination;
 import com.segwarez.springweb.infrastructure.repository.entity.BookEntity;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,46 +15,26 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class BookDao implements BookRepository {
     private final JPABookRepository jpaBookRepository;
+    private final Pagination pagination;
 
     @Override
-    public List<Book> findAll(Pagination pagination) {
-        var sort = pagination.getSortOrders().stream()
-                .map(sortOrder -> new Sort.Order(
-                        Sort.Direction.valueOf(sortOrder.getDirection().toString()),
-                        sortOrder.getField())).toList();
-        var pageRequest = PageRequest.of(
-                pagination.getPageNumber(),
-                pagination.getPageSize(),
-                Sort.by(sort));
-        return jpaBookRepository.findAll(pageRequest).stream().map(BookEntity::toBook).toList();
+    public List<Book> findAll() {
+        var pageable = pagination.getPageable();
+        return jpaBookRepository.findAll(pageable).stream().map(BookEntity::toBook).toList();
     }
 
     @Override
-    public List<Book> findByTitleContaining(String title, Pagination pagination) {
-        var sort = pagination.getSortOrders().stream()
-                .map(sortOrder -> new Sort.Order(
-                        Sort.Direction.valueOf(sortOrder.getDirection().toString()),
-                        sortOrder.getField())).toList();
-        var pageRequest = PageRequest.of(
-                pagination.getPageNumber(),
-                pagination.getPageSize(),
-                Sort.by(sort));
-        return jpaBookRepository.findByTitleContaining(title, pageRequest).stream()
+    public List<Book> findByTitleContaining(String title) {
+        var pageable = pagination.getPageable();
+        return jpaBookRepository.findByTitleContaining(title, pageable).stream()
                 .map(BookEntity::toBook)
                 .toList();
     }
 
     @Override
-    public List<Book> findByPublished(boolean published, Pagination pagination) {
-        var sort = pagination.getSortOrders().stream()
-                .map(sortOrder -> new Sort.Order(
-                        Sort.Direction.valueOf(sortOrder.getDirection().toString()),
-                        sortOrder.getField())).toList();
-        var pageRequest = PageRequest.of(
-                pagination.getPageNumber(),
-                pagination.getPageSize(),
-                Sort.by(sort));
-        return jpaBookRepository.findByPublished(published, pageRequest).stream()
+    public List<Book> findByPublished(boolean published) {
+        var pageable = pagination.getPageable();
+        return jpaBookRepository.findByPublished(published, pageable).stream()
                 .map(BookEntity::toBook)
                 .toList();
     }
@@ -64,9 +42,7 @@ public class BookDao implements BookRepository {
     @Override
     public Optional<Book> findById(UUID id) {
         var entity = jpaBookRepository.findById(id);
-        if (entity.isEmpty()) return Optional.empty();
-        return Optional.of((entity.get().toBook()));
-
+        return entity.map(BookEntity::toBook);
     }
 
     @Override
@@ -77,7 +53,6 @@ public class BookDao implements BookRepository {
     @Override
     public void delete(UUID id) {
         jpaBookRepository.deleteById(id);
-
     }
 
     @Override

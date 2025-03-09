@@ -1,0 +1,27 @@
+meta {
+  name: createBook
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:8080/books
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "title": "{{title}}",
+    "author": "{{author}}",
+    "genre": "{{genre}}",
+    "description": "{{description}}"
+  }
+}
+
+vars:pre-request {
+  title: 
+  author: 
+  genre: 
+  description: 
+}

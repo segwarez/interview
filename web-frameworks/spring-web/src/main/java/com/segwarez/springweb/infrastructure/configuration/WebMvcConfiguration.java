@@ -1,4 +1,4 @@
-package com.segwarez.springweb.infrastracture.configuration;
+package com.segwarez.springweb.infrastructure.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
