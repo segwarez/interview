@@ -14,11 +14,11 @@ import java.lang.annotation.*;
 @NotNull
 @ReportAsSingleViolation
 public @interface EnumValidator {
-    public abstract String message() default "value is not valid";
+    String message() default "value is not valid";
 
-    public abstract Class<?>[] groups() default {};
+    Class<?>[] groups() default {};
 
-    public abstract Class<? extends Payload>[] payload() default {};
+    Class<? extends Payload>[] payload() default {};
 
-    public abstract Class<? extends Enum> enumClass();
+    Class<? extends Enum> enumClass();
 }
