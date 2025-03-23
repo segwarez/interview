@@ -1,0 +1,9 @@
+quarkus:
+  default-locale: en_GB
+
+  datasource:
+    db-kind: postgresql
+    username: postgres
+    password: postgres
+    jdbc:
+      url: jdbc:postgresql://localhost:5432/testdb
