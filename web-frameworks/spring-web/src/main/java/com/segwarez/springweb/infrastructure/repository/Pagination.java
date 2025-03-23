@@ -1,4 +1,4 @@
-package com.segwarez.springweb.infrastructure.configuration;
+package com.segwarez.springweb.infrastructure.repository;
 
 import lombok.Data;
 import org.springframework.data.domain.Pageable;

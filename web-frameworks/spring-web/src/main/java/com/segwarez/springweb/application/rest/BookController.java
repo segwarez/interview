@@ -4,7 +4,7 @@ import com.segwarez.springweb.application.request.CreateBookRequest;
 import com.segwarez.springweb.application.request.UpdateBookRequest;
 import com.segwarez.springweb.domain.Book;
 import com.segwarez.springweb.domain.service.BookService;
-import com.segwarez.springweb.infrastructure.configuration.Pagination;
+import com.segwarez.springweb.infrastructure.repository.Pagination;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;

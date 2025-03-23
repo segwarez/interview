@@ -2,7 +2,6 @@ package com.segwarez.springweb.infrastructure.repository;
 
 import com.segwarez.springweb.domain.Book;
 import com.segwarez.springweb.domain.repository.BookRepository;
-import com.segwarez.springweb.infrastructure.configuration.Pagination;
 import com.segwarez.springweb.infrastructure.repository.entity.BookEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
