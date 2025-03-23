@@ -6,7 +6,6 @@ import com.segwarez.micronautweb.domain.repository.BookRepository;
 import com.segwarez.micronautweb.infrastructure.repository.entity.BookEntity;
 import io.micronaut.data.model.Pageable;
 import io.micronaut.data.model.Sort;
-import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import lombok.RequiredArgsConstructor;
 
@@ -24,7 +23,7 @@ public class BookDao implements BookRepository {
         var orders = pagination.getSortOrders().stream()
                 .map(sortOrder -> new Sort.Order(
                         sortOrder.getField(),
-                        Sort.Order.Direction.valueOf(sortOrder.getDirection().toString()),true)).toList();
+                        Sort.Order.Direction.valueOf(sortOrder.getDirection().toString()), true)).toList();
         var pageable = Pageable.from(
                 pagination.getPageNumber(),
                 pagination.getPageSize(),
@@ -39,7 +38,7 @@ public class BookDao implements BookRepository {
         var orders = pagination.getSortOrders().stream()
                 .map(sortOrder -> new Sort.Order(
                         sortOrder.getField(),
-                        Sort.Order.Direction.valueOf(sortOrder.getDirection().toString()),true)).toList();
+                        Sort.Order.Direction.valueOf(sortOrder.getDirection().toString()), true)).toList();
         var pageable = Pageable.from(
                 pagination.getPageNumber(),
                 pagination.getPageSize(),
@@ -54,7 +53,7 @@ public class BookDao implements BookRepository {
         var orders = pagination.getSortOrders().stream()
                 .map(sortOrder -> new Sort.Order(
                         sortOrder.getField(),
-                        Sort.Order.Direction.valueOf(sortOrder.getDirection().toString()),true)).toList();
+                        Sort.Order.Direction.valueOf(sortOrder.getDirection().toString()), true)).toList();
         var pageable = Pageable.from(
                 pagination.getPageNumber(),
                 pagination.getPageSize(),
@@ -67,8 +66,7 @@ public class BookDao implements BookRepository {
     @Override
     public Optional<Book> findById(UUID id) {
         var entity = jpaBookRepository.findById(id);
-        if (entity.isEmpty()) return Optional.empty();
-        return Optional.of((entity.get().toBook()));
+        return entity.map(BookEntity::toBook);
 
     }
 

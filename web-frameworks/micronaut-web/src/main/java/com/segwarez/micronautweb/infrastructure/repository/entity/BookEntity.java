@@ -2,7 +2,6 @@ package com.segwarez.micronautweb.infrastructure.repository.entity;
 
 import com.segwarez.micronautweb.domain.Book;
 import com.segwarez.micronautweb.domain.Genre;
-import io.micronaut.core.annotation.Introspected;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
