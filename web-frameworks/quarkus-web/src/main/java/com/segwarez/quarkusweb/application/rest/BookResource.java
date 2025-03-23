@@ -4,6 +4,7 @@ import com.segwarez.quarkusweb.application.request.CreateBookRequest;
 import com.segwarez.quarkusweb.application.request.UpdateBookRequest;
 import com.segwarez.quarkusweb.domain.service.BookService;
 import com.segwarez.quarkusweb.infrastructure.configuration.Pagination;
+import io.smallrye.common.annotation.RunOnVirtualThread;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -21,6 +22,7 @@ import java.util.UUID;
 import static jakarta.ws.rs.core.Response.Status.NOT_FOUND;
 
 @Path("/books")
+@RunOnVirtualThread
 public class BookResource {
     @Inject
     private BookService bookService;
