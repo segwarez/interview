@@ -1,21 +1,22 @@
 package com.segwarez.micronautweb.application.rest.validation;
 
-import jakarta.validation.ConstraintValidator;
-import jakarta.validation.ConstraintValidatorContext;
+import io.micronaut.core.annotation.AnnotationValue;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
+import io.micronaut.validation.validator.constraints.ConstraintValidator;
+import io.micronaut.validation.validator.constraints.ConstraintValidatorContext;
+import jakarta.inject.Singleton;
 
+@Singleton
 public class EnumConstraintValidator implements ConstraintValidator<EnumValidator, String> {
-    private EnumValidator annotation;
 
     @Override
-    public void initialize(EnumValidator annotation) {
-        this.annotation = annotation;
-    }
-
-    @Override
-    public boolean isValid(String valueForValidation, ConstraintValidatorContext constraintValidatorContext) {
-        var enumValues = this.annotation.enumClass().getEnumConstants();
-        if (enumValues != null) {
-            for (Object enumValue : enumValues) {
+    public boolean isValid(@Nullable String valueForValidation,
+                           @NonNull AnnotationValue<EnumValidator> annotationMetadata,
+                           @NonNull ConstraintValidatorContext context) {
+        var enumClass = annotationMetadata.get("enumClass", Class.class);
+        if (enumClass.isPresent()) {
+            for (Object enumValue : enumClass.get().getEnumConstants()) {
                 if (valueForValidation.equals(enumValue.toString())) {
                     return true;
                 }
