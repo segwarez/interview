@@ -14,8 +14,7 @@ public class ChatController {
     private final SimpMessageSendingOperations messagingTemplate;
 
     @MessageMapping("/chat.sendMessage/{channel}")
-    public ChatEvent sendMessage(@Payload ChatEvent chatEvent, @DestinationVariable("channel") String channel) {
+    public void sendMessage(@Payload ChatEvent chatEvent, @DestinationVariable("channel") String channel) {
         messagingTemplate.convertAndSend(String.format("/topic/public/%s", channel), chatEvent);
-        return chatEvent;
     }
 }

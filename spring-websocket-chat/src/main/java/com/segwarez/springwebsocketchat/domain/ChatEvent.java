@@ -8,7 +8,7 @@ import lombok.Data;
 @Builder
 @AllArgsConstructor
 public class ChatEvent {
-    private String user;
+    private String username;
     private String content;
     private EventType eventType;
 }

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring WebSocket Chat</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+
+<div id="header-bar">
+    <span>Segwarez</span>
+</div>
+
+<div id="chat-container">
+    <div id="login-section">
+        <h2>Spring WebSocket Chat</h2>
+        <input type="text" id="username" placeholder="Enter your username"/>
+        <input type="text" id="channel" placeholder="Enter channel name"/>
+        <button id="join-button">Join</button>
+    </div>
+
+    <div id="chat-section" style="display: none;">
+        <div id="channel-name"></div>
+        <div id="messages"></div>
+        <div id="message-input-section">
+            <input type="text" id="message" placeholder="Type a message..."/>
+            <button id="send-message-button">Send</button>
+        </div>
+        <button id="leave-channel-button">Leave Channel</button>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"
+        integrity="sha512-1QvjE7BtotQjkq8PxLeF6P46gEpBRXuskzIVgjFpekzFVF4yjRgrQvTG1MTOJ3yQgvTteKAcO7DSZI92+u/yZw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"
+        integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="app.js"></script>
+</body>
+</html>

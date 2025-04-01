@@ -42,7 +42,7 @@ public class WebSocketEventListener {
                         messagingTemplate.convertAndSend(String.format("/topic/public/%s", channel),
                                 ChatEvent.builder()
                                         .eventType(EventType.JOINED)
-                                        .user(username)
+                                        .username(username)
                                         .build());
                     }
                 });
@@ -58,7 +58,7 @@ public class WebSocketEventListener {
             messagingTemplate.convertAndSend(String.format("/topic/public/%s", channelAttribute.get()),
                     ChatEvent.builder()
                             .eventType(EventType.LEFT)
-                            .user(usernameAttribute.get())
+                            .username(usernameAttribute.get())
                             .build());
         }
     }
