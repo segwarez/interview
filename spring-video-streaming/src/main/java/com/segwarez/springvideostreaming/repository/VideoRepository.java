@@ -1,4 +1,4 @@
-package com.segwarez.springvideostreaming.service;
+package com.segwarez.springvideostreaming.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class VideoService {
+public class VideoRepository {
     private static final String PLAYLIST_PATH_FORMAT = "video/%s.m3u8";
     private static final String VIDEO_PATH_FORMAT = "video/%s.ts";
 
@@ -55,7 +55,7 @@ public class VideoService {
                         .header(HttpHeaders.CONTENT_TYPE, "video/mp2t")
                         .body(dataBuffer);
             } catch (IOException e) {
-                throw new RuntimeException("Error reading video file", e);
+                return ResponseEntity.internalServerError().build();
             }
         });
     }

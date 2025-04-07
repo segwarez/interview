@@ -1,6 +1,6 @@
 package com.segwarez.springvideostreaming.controller;
 
-import com.segwarez.springvideostreaming.service.VideoService;
+import com.segwarez.springvideostreaming.repository.VideoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
@@ -14,17 +14,17 @@ import java.util.Optional;
 @RequestMapping("/video")
 @RequiredArgsConstructor
 public class VideoController {
-    private final VideoService videoService;
+    private final VideoRepository videoRepository;
 
     @GetMapping("/{videoId}")
     public Mono<ResponseEntity<DataBuffer>> streamVideo(
             @PathVariable String videoId,
             @RequestHeader(value = HttpHeaders.RANGE, required = false) Optional<String> range) {
-        return videoService.streamVideo(videoId, range);
+        return videoRepository.streamVideo(videoId, range);
     }
 
     @GetMapping("/{videoId}/playlist")
     public Mono<ResponseEntity<String>> getHlsPlaylist(String videoId) {
-        return videoService.getHlsPlaylist(videoId);
+        return videoRepository.getHlsPlaylist(videoId);
     }
 }
