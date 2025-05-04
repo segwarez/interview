@@ -1,6 +1,6 @@
 # Spring video streaming over HTTP
 
-## How To convert video to FFmpeg format
+## How To: Convert video to FFmpeg format
 
 ```
 ffmpeg -i input.mov \
