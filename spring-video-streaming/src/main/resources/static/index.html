@@ -15,12 +15,22 @@
 <div id="video-container">
     <div id="video-section">
         <h2>Spring Video Streaming</h2>
-        <video id="video-player" controls>
-            <source src="http://localhost:8080/videos/test/playlist" type="application/vnd.apple.mpegurl">
-            Your browser does not support the video tag.
-        </video>
+        <video id="video-player" controls autoplay muted></video>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
+<script>
+    var video = document.getElementById('video-player');
+    var videoSrc = "http://localhost:8080/video/test/playlist";
+    if (Hls.isSupported()) {
+        var hls = new Hls();
+        hls.loadSource(videoSrc);
+        hls.attachMedia(video);
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = videoSrc;
+    }
+</script>
 
 </body>
 </html>

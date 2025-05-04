@@ -16,15 +16,16 @@ import java.util.Optional;
 public class VideoController {
     private final VideoRepository videoRepository;
 
-    @GetMapping("/{videoId}")
+    @GetMapping("/{videoId}/{segment:.+\\.ts}")
     public Mono<ResponseEntity<DataBuffer>> streamVideo(
             @PathVariable String videoId,
+            @PathVariable String segment,
             @RequestHeader(value = HttpHeaders.RANGE, required = false) Optional<String> range) {
-        return videoRepository.streamVideo(videoId, range);
+        return videoRepository.streamVideo(videoId, segment, range);
     }
 
     @GetMapping("/{videoId}/playlist")
-    public Mono<ResponseEntity<String>> getHlsPlaylist(String videoId) {
+    public Mono<ResponseEntity<String>> getHlsPlaylist(@PathVariable String videoId) {
         return videoRepository.getHlsPlaylist(videoId);
     }
 }

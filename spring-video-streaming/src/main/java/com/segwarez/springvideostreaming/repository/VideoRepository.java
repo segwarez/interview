@@ -17,36 +17,28 @@ import java.util.Optional;
 @Repository
 @RequiredArgsConstructor
 public class VideoRepository {
-    private static final String PLAYLIST_PATH_FORMAT = "video/%s.m3u8";
-    private static final String VIDEO_PATH_FORMAT = "video/%s.ts";
+    private static final String PLAYLIST_PATH_FORMAT = "videos/%s/playlist.m3u8";
+    private static final String SEGMENT_PATH_FORMAT = "videos/%s/%s";
 
     public Mono<ResponseEntity<String>> getHlsPlaylist(String videoId) {
         var playlistPath = Paths.get(String.format(PLAYLIST_PATH_FORMAT, videoId));
+        if (!Files.exists(playlistPath)) return Mono.just(ResponseEntity.notFound().build());
 
         return Mono.fromCallable(() -> {
-            if (Files.exists(playlistPath)) {
-                var playlistContent = Files.readString(playlistPath);
-                return ResponseEntity.ok()
-                        .header(HttpHeaders.CONTENT_TYPE, "application/vnd.apple.mpegurl")
-                        .body(playlistContent);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
+            var playlistContent = Files.readString(playlistPath);
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_TYPE, "application/vnd.apple.mpegurl")
+                    .body(playlistContent);
         });
     }
 
-    private byte[] readVideoFile(String videoId) throws IOException {
-        var videoPath = Paths.get(String.format(VIDEO_PATH_FORMAT, videoId));
-        return Files.readAllBytes(videoPath);
-    }
-
-    public Mono<ResponseEntity<DataBuffer>> streamVideo(String videoId, Optional<String> range) {
-        var videoPath = Paths.get(String.format(VIDEO_PATH_FORMAT, videoId));
-        if (!Files.exists(videoPath)) return Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    public Mono<ResponseEntity<DataBuffer>> streamVideo(String videoId, String segment, Optional<String> range) {
+        var segmentPath = Paths.get(String.format(SEGMENT_PATH_FORMAT, videoId, segment));
+        if (!Files.exists(segmentPath)) return Mono.just(ResponseEntity.notFound().build());
 
         return Mono.fromCallable(() -> {
             try {
-                var videoBytes = readVideoFile(videoId);
+                var videoBytes = Files.readAllBytes(segmentPath);
                 if (range.isPresent()) {
                     return streamRange(videoBytes, range.get());
                 }
