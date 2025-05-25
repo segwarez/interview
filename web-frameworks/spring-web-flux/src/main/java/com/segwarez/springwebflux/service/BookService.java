@@ -1,4 +1,4 @@
-package com.segwarez.springwebflux.model;
+package com.segwarez.springwebflux.service;
 
 import com.segwarez.springwebflux.repository.BookRepository;
 import com.segwarez.springwebflux.repository.entity.Book;

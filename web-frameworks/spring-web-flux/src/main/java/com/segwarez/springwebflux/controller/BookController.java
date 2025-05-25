@@ -2,7 +2,7 @@ package com.segwarez.springwebflux.controller;
 
 import com.segwarez.springwebflux.controller.request.CreateBookRequest;
 import com.segwarez.springwebflux.controller.request.UpdateBookRequest;
-import com.segwarez.springwebflux.model.BookService;
+import com.segwarez.springwebflux.service.BookService;
 import com.segwarez.springwebflux.repository.entity.Book;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
