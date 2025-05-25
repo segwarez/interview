@@ -1,0 +1,79 @@
+services:
+  postgres:
+    image: postgres:17.4
+    restart: always
+    environment:
+      POSTGRES_DB: shareddb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '5432:5432'
+
+  adminer:
+    image: adminer
+    restart: always
+    depends_on:
+      - postgres
+    ports:
+      - '8081:8080'
+
+  keycloak:
+    image: keycloak/keycloak:26.2
+    restart: always
+    command: start-dev
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/shareddb
+      KC_DB_USERNAME: postgres
+      KC_DB_PASSWORD: postgres
+    depends_on:
+      - postgres
+    ports:
+      - '8082:8080'
+
+  zipkin:
+    image: openzipkin/zipkin:3.5.1
+    restart: always
+    ports:
+      - '9411:9411'
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.9.0
+    restart: always
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - '2181:2181'
+
+  broker:
+    image: confluentinc/cp-kafka:7.9.0
+    restart: always
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:29092, PLAINTEXT_HOST://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_JMX_PORT: 9997
+    depends_on:
+      - zookeeper
+    ports:
+      - '9092:9092'
+      - '9997:9997'
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:v0.7.2
+    restart: always
+    environment:
+      KAFKA_CLUSTERS_0_NAME: broker1
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: broker:29092
+      KAFKA_CLUSTERS_0_METRICS_PORT: 9997
+      DYNAMIC_CONFIG_ENABLED: true
+    depends_on:
+      - zookeeper
+      - broker
+    ports:
+      - '8083:8080'
