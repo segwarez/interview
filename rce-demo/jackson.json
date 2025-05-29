@@ -1,0 +1,18 @@
+[
+  "org.codehaus.groovy.runtime.ConvertedClosure",
+  {
+    "closure": [
+      "groovy.lang.MethodClosure",
+      {
+        "delegate": [
+          "java.lang.ProcessBuilder",
+          {
+            "command": ["open", "-a", "Calculator"]
+          }
+        ],
+        "method": "start"
+      }
+    ],
+    "method": "call"
+  }
+]

