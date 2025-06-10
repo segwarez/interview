@@ -8,11 +8,11 @@ spring:
         ping-bundle:
           reload-on-update: true
           keystore:
-            location: file:ping_keystore.jks
+            location: classpath:signed-by-intermediate/ping-keystore.jks
             password: test123
             type: JKS
           truststore:
-            location: file:ping_truststore.jks
+            location: classpath:signed-by-intermediate/ping-truststore.jks
             password: test123
             type: JKS
 server:
