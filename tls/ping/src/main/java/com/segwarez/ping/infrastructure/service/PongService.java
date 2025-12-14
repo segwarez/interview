@@ -16,7 +16,9 @@ public class PongService {
 
     public String pong() {
         var url = String.format("https://%s:%d/pong", host, port);
-        var response = restClient.get().uri(url).retrieve();
-        return response.body(String.class);
+        return restClient.get()
+                .uri(url)
+                .retrieve()
+                .body(String.class);
     }
 }
