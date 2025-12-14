@@ -1,0 +1,41 @@
+global:
+  name: consul
+  datacenter: minikube
+  domain: segwarez
+
+  tls:
+    enabled: true
+    enableAutoEncrypt: true
+    httpsOnly: true
+
+  acls:
+    manageSystemACLs: true
+
+  gossipEncryption:
+    autoGenerate: true
+
+  metrics:
+    enabled: true
+    enableAgentMetrics: true
+    agentMetricsRetentionTime: 1m
+
+connectInject:
+  enabled: true
+
+controller:
+  enabled: true
+
+server:
+  replicas: 1
+  bootstrapExpect: 1
+
+client:
+  enabled: true
+  grpc: true
+
+ui:
+  enabled: true
+  service:
+    type: ClusterIP
+  dashboardURLTemplates:
+    service: 'http://localhost:3000/d/lDlaj-NGz/service-overview?orgId=1&var-service={{Service.Name}}&var-namespace={{Service.Namespace}}&var-dc={{Datacenter}}'

@@ -1,0 +1,47 @@
+deployment:
+  serviceAccount:
+    create: true
+    name: kong-proxy
+
+env:
+  database: "off"
+  nginx_worker_processes: "auto"
+
+  proxy_access_log: /dev/stdout
+  proxy_error_log: /dev/stderr
+  admin_access_log: /dev/stdout
+  admin_error_log: /dev/stderr
+
+  anonymous_reports: "off"
+
+podSecurityContext:
+  fsGroup: 1000
+
+securityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+  runAsNonRoot: true
+
+proxy:
+  enabled: true
+  type: NodePort
+  http:
+    enabled: true
+    servicePort: 80
+  tls:
+    enabled: false
+
+admin:
+  enabled: true
+  type: ClusterIP
+  http:
+    enabled: false
+  tls:
+    enabled: true
+    servicePort: 8444
+
+podAnnotations:
+  consul.hashicorp.com/connect-inject: "true"
+  consul.hashicorp.com/connect-service: "kong-proxy"
+  consul.hashicorp.com/transparent-proxy: "true"
+  consul.hashicorp.com/transparent-proxy-exclude-inbound-ports: "8000,8443,8444"

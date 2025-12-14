@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: billing
+
+server:
+  port: 8083
+
