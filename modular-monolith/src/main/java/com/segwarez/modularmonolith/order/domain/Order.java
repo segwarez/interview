@@ -11,17 +11,19 @@ import java.util.UUID;
 public class Order {
     private final UUID id;
     private final List<OrderItem> items;
-    private final String destinationAddress;
+    private final OrderShippingAddress shippingAddress;
+    private final OrderPaymentMethod paymentMethod;
     private final Instant createdAt;
     private OrderStatus status;
 
-    public Order(List<OrderItem> items, String destinationAddress) {
+    public Order(List<OrderItem> items, OrderShippingAddress shippingAddress, OrderPaymentMethod paymentMethod) {
         if (items == null || items.isEmpty())
             throw new IllegalArgumentException("Order must contain items");
 
         this.id = UUID.randomUUID();
         this.items = List.copyOf(items);
-        this.destinationAddress = destinationAddress;
+        this.shippingAddress = shippingAddress;
+        this.paymentMethod = paymentMethod;
         this.createdAt = Instant.now();
         this.status = OrderStatus.NEW;
     }

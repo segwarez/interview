@@ -1,6 +1,6 @@
 package com.segwarez.modularmonolith.order.infrastructure.rest;
 
-import com.segwarez.modularmonolith.order.infrastructure.rest.dto.OrderErrorResponse;
+import com.segwarez.modularmonolith.order.infrastructure.rest.response.OrderErrorResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;

@@ -19,7 +19,7 @@ public class OrderItem {
     }
 
     public OrderItem(OrderProduct p) {
-        this(p.productId(), p.unitPrice(), p.quantity());
+        this(p.getProductId(), p.getUnitPrice(), p.getQuantity());
     }
 
     public BigDecimal getTotalAmount() {

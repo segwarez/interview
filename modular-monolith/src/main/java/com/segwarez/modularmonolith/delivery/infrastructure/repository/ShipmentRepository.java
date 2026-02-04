@@ -1,4 +1,4 @@
-package com.segwarez.modularmonolith.delivery.infrastructure;
+package com.segwarez.modularmonolith.delivery.infrastructure.repository;
 
 import com.segwarez.modularmonolith.delivery.domain.Shipment;
 import org.springframework.stereotype.Repository;
@@ -9,9 +9,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
 public class ShipmentRepository {
-    private final Map<UUID, Shipment> storage = new ConcurrentHashMap<>();
+    private final Map<UUID, Shipment> shipments = new ConcurrentHashMap<>();
 
     public void save(Shipment shipment) {
-        storage.put(shipment.getTrackingNumber(), shipment);
+        shipments.put(shipment.getTrackingNumber(), shipment);
     }
 }

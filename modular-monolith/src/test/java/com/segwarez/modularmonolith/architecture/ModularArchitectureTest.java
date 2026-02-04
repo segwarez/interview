@@ -9,16 +9,8 @@ import static com.tngtech.archunit.library.dependencies.SlicesRuleDefinition.sli
 
 class ModularArchitectureTest {
     private static final String BASE_PACKAGE = "com.segwarez.modularmonolith";
-
-    private static final JavaClasses CLASSES =
-            new ClassFileImporter().importPackages(BASE_PACKAGE);
-
-    private static final String[] MODULES = {
-            "order",
-            "billing",
-            "warehouse",
-            "delivery"
-    };
+    private static final JavaClasses CLASSES = new ClassFileImporter().importPackages(BASE_PACKAGE);
+    private static final String[] MODULES = {"order", "billing", "warehouse", "delivery"};
 
     @Test
     void modulesShouldBeCycleFree() {

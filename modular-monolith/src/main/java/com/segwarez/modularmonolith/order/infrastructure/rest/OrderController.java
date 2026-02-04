@@ -1,10 +1,7 @@
 package com.segwarez.modularmonolith.order.infrastructure.rest;
 
-import com.segwarez.modularmonolith.order.api.OrderConfirmation;
-import com.segwarez.modularmonolith.order.api.OrderFacade;
-import com.segwarez.modularmonolith.order.api.OrderProduct;
-import com.segwarez.modularmonolith.order.api.PlaceOrderCommand;
-import com.segwarez.modularmonolith.order.infrastructure.rest.dto.PlaceOrderRequest;
+import com.segwarez.modularmonolith.order.api.*;
+import com.segwarez.modularmonolith.order.infrastructure.rest.request.PlaceOrderRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,16 +21,19 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<OrderConfirmation> placeOrder(@Valid @RequestBody PlaceOrderRequest request) {
-        List<OrderProduct> products = request.products().stream()
+        List<OrderProduct> products = request.getProducts().stream()
                 .map(p -> new OrderProduct(
-                        UUID.fromString(p.productId()),
-                        p.unitPrice(),
-                        p.quantity()
+                        UUID.fromString(p.getProductId()),
+                        p.getUnitPrice(),
+                        p.getQuantity()
                 ))
                 .toList();
 
         OrderConfirmation confirmation =
-                orderFacade.placeOrder(new PlaceOrderCommand(products, request.destinationAddress()));
+                orderFacade.placeOrder(new PlaceOrderCommand(
+                        products,
+                        request.getShippingAddress().toApi(),
+                        request.getPaymentMethod().toApi()));
 
         return ResponseEntity.ok(confirmation);
     }
