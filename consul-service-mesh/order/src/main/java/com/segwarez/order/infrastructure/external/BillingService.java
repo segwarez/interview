@@ -1,23 +1,23 @@
-package com.segwarez.billing.infrastructure.service;
+package com.segwarez.order.infrastructure.external;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
-@Service
+@Component
 @RequiredArgsConstructor
-public class WarehouseService {
-    @Value("${warehouse.host:localhost}")
+public class BillingService {
+    @Value("${billing.host:localhost}")
     private String host;
-    @Value("${warehouse.port:8082}")
+    @Value("${billing.port:8083}")
     private int port;
 
     private final RestClient restClient;
 
-    public void update() {
-        var url = String.format("http://%s:%d/update", host, port);
-        restClient.put()
+    public void pay() {
+        var url = String.format("http://%s:%d/pay", host, port);
+        restClient.post()
                 .uri(url)
                 .retrieve()
                 .toBodilessEntity();

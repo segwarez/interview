@@ -1,11 +1,11 @@
-package com.segwarez.order.infrastructure.service;
+package com.segwarez.order.infrastructure.external;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
-@Service
+@Component
 @RequiredArgsConstructor
 public class WarehouseService {
     @Value("${inventory.host:localhost}")

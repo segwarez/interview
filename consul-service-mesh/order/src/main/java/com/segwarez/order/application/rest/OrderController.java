@@ -1,8 +1,8 @@
 package com.segwarez.order.application.rest;
 
-import com.segwarez.order.infrastructure.service.DeliveryService;
-import com.segwarez.order.infrastructure.service.WarehouseService;
-import com.segwarez.order.infrastructure.service.BillingService;
+import com.segwarez.order.infrastructure.external.DeliveryService;
+import com.segwarez.order.infrastructure.external.WarehouseService;
+import com.segwarez.order.infrastructure.external.BillingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

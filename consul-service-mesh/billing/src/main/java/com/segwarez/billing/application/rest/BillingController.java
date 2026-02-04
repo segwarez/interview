@@ -1,6 +1,6 @@
 package com.segwarez.billing.application.rest;
 
-import com.segwarez.billing.infrastructure.service.WarehouseService;
+import com.segwarez.billing.infrastructure.external.WarehouseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
