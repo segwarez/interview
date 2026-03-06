@@ -8,9 +8,9 @@ import org.springframework.web.client.RestClient;
 @Component
 @RequiredArgsConstructor
 public class BillingService {
-    @Value("${billing.host:localhost}")
+    @Value("${billing.host}")
     private String host;
-    @Value("${billing.port:8083}")
+    @Value("${billing.port}")
     private int port;
 
     private final RestClient restClient;

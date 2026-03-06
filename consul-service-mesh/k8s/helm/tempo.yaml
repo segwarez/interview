@@ -1,0 +1,22 @@
+tempo:
+  searchEnabled: true
+
+service:
+  type: ClusterIP
+  port: 3200
+
+resources:
+  requests:
+    cpu: 200m
+    memory: 256Mi
+  limits:
+    cpu: 1
+    memory: 512Mi
+
+persistence:
+  enabled: false
+
+traces:
+  otlp:
+    http:
+      enabled: true

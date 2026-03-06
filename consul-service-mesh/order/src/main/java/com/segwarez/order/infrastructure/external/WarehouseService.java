@@ -8,18 +8,18 @@ import org.springframework.web.client.RestClient;
 @Component
 @RequiredArgsConstructor
 public class WarehouseService {
-    @Value("${inventory.host:localhost}")
+    @Value("${warehouse.host}")
     private String host;
-    @Value("${inventory.port:8082}")
+    @Value("${warehouse.port}")
     private int port;
 
     private final RestClient restClient;
 
     public boolean reserve() {
         var url = String.format("http://%s:%d/reserve", host, port);
-        return restClient.get()
+        return Boolean.TRUE.equals(restClient.get()
                 .uri(url)
                 .exchange((req, res) ->
-                        res.getStatusCode().is2xxSuccessful());
+                        res.getStatusCode().is2xxSuccessful()));
     }
 }

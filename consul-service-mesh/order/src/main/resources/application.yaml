@@ -5,3 +5,21 @@ spring:
 server:
   port: 8081
 
+management:
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: health
+
+billing:
+  host: ${BILLING_HOST:localhost}
+  port: ${BILLING_PORT:8083}
+
+delivery:
+  host: ${DELIVERY_HOST:localhost}
+  port: ${DELIVERY_POST:8085}
+
+warehouse:
+  host: ${WAREHOUSE_HOST:localhost}
+  port: ${WAREHOUSE_PORT:8082}

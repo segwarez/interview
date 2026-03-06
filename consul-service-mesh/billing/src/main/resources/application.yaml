@@ -5,3 +5,13 @@ spring:
 server:
   port: 8083
 
+management:
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: health
+
+warehouse:
+  host: ${WAREHOUSE_HOST:localhost}
+  port: ${WAREHOUSE_PORT:8082}

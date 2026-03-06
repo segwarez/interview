@@ -1,0 +1,87 @@
+services:
+  loki:
+    image: grafana/loki:3.6.7
+    restart: always
+
+  tempo:
+    image: grafana/tempo:2.10.1
+    restart: always
+    command: [ "-config.file=/etc/tempo.yaml" ]
+    volumes:
+      - ./tempo-config.yaml:/etc/tempo.yaml:ro
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.147.0
+    restart: always
+    command: [ "--config=/etc/otelcol/config.yaml" ]
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otelcol/config.yaml:ro
+    depends_on:
+      - loki
+      - tempo
+
+  prometheus:
+    image: prom/prometheus:v3.10.0
+    restart: always
+    volumes:
+      - ./prometheus-config.yaml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - '9090:9090'
+    depends_on:
+      - otel-collector
+
+  grafana:
+    image: grafana/grafana:12.4.0
+    restart: always
+    volumes:
+      - ./grafana-datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml:ro
+    ports:
+      - '3000:3000'
+
+  order:
+    build: ./order
+    environment:
+      OTEL_SERVICE_NAME: order
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4318
+      OTEL_TRACES_EXPORTER: otlp
+      OTEL_METRICS_EXPORTER: otlp
+      OTEL_LOGS_EXPORTER: otlp
+      BILLING_HOST: host.docker.internal
+      DELIVERY_HOST: host.docker.internal
+      WAREHOUSE_HOST: host.docker.internal
+    ports:
+      - "8080:8081"
+
+  warehouse:
+    build: ./warehouse
+    environment:
+      OTEL_SERVICE_NAME: warehouse
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4318
+      OTEL_TRACES_EXPORTER: otlp
+      OTEL_METRICS_EXPORTER: otlp
+      OTEL_LOGS_EXPORTER: otlp
+    ports:
+      - "8082:8082"
+
+  billing:
+    build: ./billing
+    environment:
+      OTEL_SERVICE_NAME: billing
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4318
+      OTEL_TRACES_EXPORTER: otlp
+      OTEL_METRICS_EXPORTER: otlp
+      OTEL_LOGS_EXPORTER: otlp
+      WAREHOUSE_HOST: host.docker.internal
+    ports:
+      - "8083:8083"
+
+  delivery:
+    build: ./delivery
+    environment:
+      OTEL_SERVICE_NAME: delivery
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4318
+      OTEL_TRACES_EXPORTER: otlp
+      OTEL_METRICS_EXPORTER: otlp
+      OTEL_LOGS_EXPORTER: otlp
+    ports:
+      - "8085:8085"

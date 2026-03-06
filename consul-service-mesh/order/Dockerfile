@@ -1,4 +1,9 @@
-FROM eclipse-temurin:25-jre-ubi10-minimal
+FROM eclipse-temurin:25-jdk AS build
+WORKDIR /workspace
+COPY . .
+RUN ./gradlew --no-daemon clean bootJar
+
+FROM eclipse-temurin:25-jre AS runtime
 
 LABEL \
   org.opencontainers.image.title="order-service" \
@@ -10,8 +15,12 @@ LABEL \
 
 WORKDIR /app
 
-COPY build/libs/order.jar order.jar
+COPY --from=build /workspace/build/libs/order.jar /app/order.jar
+
+ADD https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar \
+    /app/opentelemetry-javaagent.jar
+
+ENV JAVA_TOOL_OPTIONS="-XX:+UseZGC -XX:MaxRAMPercentage=75.0 -XX:InitialRAMPercentage=25.0 -javaagent:/app/opentelemetry-javaagent.jar"
 
 EXPOSE 8081
-
-ENTRYPOINT ["java", "-XX:MaxRAMPercentage=75.0", "-jar", "/app/order.jar"]
+ENTRYPOINT ["java", "-jar", "/app/order.jar"]

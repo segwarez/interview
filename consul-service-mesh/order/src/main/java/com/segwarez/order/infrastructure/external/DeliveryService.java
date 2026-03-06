@@ -8,9 +8,9 @@ import org.springframework.web.client.RestClient;
 @Component
 @RequiredArgsConstructor
 public class DeliveryService {
-    @Value("${delivery.host:localhost}")
+    @Value("${delivery.host}")
     private String host;
-    @Value("${delivery.port:8084}")
+    @Value("${delivery.port}")
     private int port;
 
     private final RestClient restClient;

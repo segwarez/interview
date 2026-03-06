@@ -1,4 +1,9 @@
-FROM eclipse-temurin:25-jre-ubi10-minimal
+FROM eclipse-temurin:25-jdk AS build
+WORKDIR /workspace
+COPY . .
+RUN ./gradlew --no-daemon clean bootJar
+
+FROM eclipse-temurin:25-jre AS runtime
 
 LABEL \
   org.opencontainers.image.title="delivery-service" \
@@ -10,8 +15,12 @@ LABEL \
 
 WORKDIR /app
 
-COPY build/libs/delivery.jar delivery.jar
+COPY --from=build /workspace/build/libs/delivery.jar /app/delivery.jar
 
-EXPOSE 8084
+ADD https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar \
+    /app/opentelemetry-javaagent.jar
 
-ENTRYPOINT ["java", "-XX:MaxRAMPercentage=75.0", "-jar", "/app/delivery.jar"]
+ENV JAVA_TOOL_OPTIONS="-XX:+UseZGC -XX:MaxRAMPercentage=75.0 -XX:InitialRAMPercentage=25.0 -javaagent:/app/opentelemetry-javaagent.jar"
+
+EXPOSE 8085
+ENTRYPOINT ["java", "-jar", "/app/delivery.jar"]

@@ -6,17 +6,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 @RestController
 public class WarehouseController {
-    private final Random random = new Random();
-
     @GetMapping(value = "/reserve", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> reserve() {
-        if (random.nextBoolean()) {
-            return ResponseEntity.ok().build();
-        }
+        if (ThreadLocalRandom.current().nextBoolean()) return ResponseEntity.ok().build();
         return ResponseEntity.notFound().build();
     }
 

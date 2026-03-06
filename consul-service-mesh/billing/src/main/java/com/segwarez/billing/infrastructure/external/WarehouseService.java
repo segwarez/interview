@@ -8,9 +8,9 @@ import org.springframework.web.client.RestClient;
 @Component
 @RequiredArgsConstructor
 public class WarehouseService {
-    @Value("${warehouse.host:localhost}")
+    @Value("${warehouse.host}")
     private String host;
-    @Value("${warehouse.port:8082}")
+    @Value("${warehouse.port}")
     private int port;
 
     private final RestClient restClient;
