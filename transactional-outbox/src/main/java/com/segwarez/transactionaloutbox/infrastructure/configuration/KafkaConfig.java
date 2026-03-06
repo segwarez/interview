@@ -30,7 +30,6 @@ public class KafkaConfig {
     public ProducerFactory<String, OutboxEvent> producerFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-
         return new DefaultKafkaProducerFactory<>(props,
                 new StringSerializer(),
                 new JacksonJsonSerde<>(OutboxEvent.class).serializer());
