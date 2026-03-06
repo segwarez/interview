@@ -24,10 +24,9 @@ public class PageStatisticsController {
 
     @GetMapping("/{id}/views")
     public ResponseEntity<Integer> getNumberOfUniqueUsers(@PathVariable("id") String pageId) {
-        KafkaStreams kafkaStreams = factoryBean.getKafkaStreams();
+        var kafkaStreams = factoryBean.getKafkaStreams();
         ReadOnlyKeyValueStore<String, Set<String>> page = kafkaStreams.store(
                 StoreQueryParameters.fromNameAndType(PAGE_VIEW_EVENT_STORE, QueryableStoreTypes.keyValueStore()));
-
         var views = page.get(pageId);
         if (views != null) return ResponseEntity.ok(views.size());
         return ResponseEntity.notFound().build();
