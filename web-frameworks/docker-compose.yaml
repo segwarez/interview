@@ -6,29 +6,29 @@ services:
       POSTGRES_DB: testdb
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-    ports:
-      - '5432:5432'
     volumes:
       - ./sql/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+    ports:
+      - '5432:5432'
 
   adminer:
     image: adminer
     restart: always
-    depends_on:
-      - postgres
     ports:
       - '8081:8080'
+    depends_on:
+      - postgres
 
   prometheus:
-    image: prom/prometheus:v3.5.1
+    image: prom/prometheus:v3.10.0
     restart: always
+    volumes:
+      - ./prometheus-config.yaml:/etc/prometheus/prometheus.yml
     ports:
       - '9090:9090'
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
 
   grafana:
-    image: grafana/grafana:10.1.10
+    image: grafana/grafana:12.4.0
     restart: always
     ports:
       - '3000:3000'
