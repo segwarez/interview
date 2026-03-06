@@ -16,7 +16,7 @@ spring:
             password: test123
             type: JKS
 server:
-  port: 8444
+  port: 8443
   ssl:
     client-auth: need
     bundle: pong-bundle
