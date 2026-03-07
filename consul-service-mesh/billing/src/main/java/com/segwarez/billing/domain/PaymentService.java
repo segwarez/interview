@@ -1,6 +1,6 @@
 package com.segwarez.billing.domain;
 
-import com.segwarez.billing.infrastructure.external.WarehouseService;
+import com.segwarez.billing.infrastructure.external.WarehouseClient;
 import io.opentelemetry.instrumentation.annotations.WithSpan;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class PaymentService {
     private static final Logger log = LoggerFactory.getLogger(PaymentService.class);
-    private final WarehouseService warehouseService;
+    private final WarehouseClient warehouseClient;
 
     public void pay() {
         log.info("Making payment.");
@@ -36,6 +36,6 @@ public class PaymentService {
 
     @WithSpan("billing.update_warehouse")
     public void updateWarehouse() {
-        warehouseService.update();
+        warehouseClient.update();
     }
 }

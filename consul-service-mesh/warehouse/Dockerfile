@@ -22,5 +22,5 @@ ADD https://github.com/open-telemetry/opentelemetry-java-instrumentation/release
 
 ENV JAVA_TOOL_OPTIONS="-XX:+UseZGC -XX:MaxRAMPercentage=75.0 -XX:InitialRAMPercentage=25.0 -javaagent:/app/opentelemetry-javaagent.jar"
 
-EXPOSE 8082
+EXPOSE 8081
 ENTRYPOINT ["java", "-jar", "/app/warehouse.jar"]

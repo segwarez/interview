@@ -17,7 +17,7 @@ spec:
           image: warehouse:1.0
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 8082
+            - containerPort: 8081
           resources:
             requests:
               cpu: 50m

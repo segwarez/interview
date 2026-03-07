@@ -17,7 +17,7 @@ spec:
           image: delivery:1.0
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 8085
+            - containerPort: 8083
           resources:
             requests:
               cpu: 50m

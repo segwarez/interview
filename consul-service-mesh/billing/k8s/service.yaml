@@ -6,5 +6,5 @@ spec:
   selector:
     app: billing
   ports:
-    - port: 8083
-      targetPort: 8083
+    - port: 8082
+      targetPort: 8082

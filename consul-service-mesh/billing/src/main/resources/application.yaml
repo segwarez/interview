@@ -3,7 +3,7 @@ spring:
     name: billing
 
 server:
-  port: 8083
+  port: 8082
 
 management:
   endpoints:
@@ -14,4 +14,4 @@ management:
 
 warehouse:
   host: ${WAREHOUSE_HOST:localhost}
-  port: ${WAREHOUSE_PORT:8082}
+  port: ${WAREHOUSE_PORT:8081}

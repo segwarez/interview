@@ -24,7 +24,7 @@ spec:
               cpu: 500m
               memory: 512Mi
           ports:
-            - containerPort: 8083
+            - containerPort: 8082
           env:
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
               value: "http://otel-collector-opentelemetry-collector.observability.svc.cluster.local:4318"
