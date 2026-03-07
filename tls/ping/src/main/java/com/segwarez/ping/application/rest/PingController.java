@@ -1,6 +1,6 @@
 package com.segwarez.ping.application.rest;
 
-import com.segwarez.ping.infrastructure.service.PongService;
+import com.segwarez.ping.infrastructure.external.PongClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class PingController {
-    private final PongService pongService;
+    private final PongClient pongClient;
 
     @GetMapping(value = "/ping", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> ping(){
-        return ResponseEntity.ok(pongService.pong());
+        return ResponseEntity.ok(pongClient.pong().getBody());
     }
 }
