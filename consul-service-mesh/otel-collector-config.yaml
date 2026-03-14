@@ -2,11 +2,11 @@ receivers:
   otlp:
     protocols:
       http:
-        endpoint: 0.0.0.0:4318
+        endpoint: otel-collector:4318
 
 exporters:
   prometheus:
-    endpoint: 0.0.0.0:8889
+    endpoint: otel-collector:8889
     resource_to_telemetry_conversion:
       enabled: true
     enable_open_metrics: true
@@ -22,17 +22,14 @@ exporters:
 processors:
   batch:
 
-connectors:
-  spanmetrics:
-
 service:
   pipelines:
     traces:
       receivers: [ otlp ]
       processors: [ batch ]
-      exporters: [ otlphttp/tempo,spanmetrics ]
+      exporters: [ otlphttp/tempo ]
     metrics:
-      receivers: [ otlp,spanmetrics ]
+      receivers: [ otlp ]
       processors: [ batch ]
       exporters: [ prometheus ]
     logs:

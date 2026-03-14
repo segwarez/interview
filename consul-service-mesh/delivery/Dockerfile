@@ -17,10 +17,21 @@ WORKDIR /app
 
 COPY --from=build /workspace/build/libs/delivery.jar /app/delivery.jar
 
-ADD https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar \
-    /app/opentelemetry-javaagent.jar
+ADD https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/download/v2.25.0/opentelemetry-javaagent.jar opentelemetry-javaagent.jar
+ADD https://github.com/grafana/otel-profiling-java/releases/download/v1.1.0/pyroscope-otel.jar pyroscope-otel.jar
 
-ENV JAVA_TOOL_OPTIONS="-XX:+UseZGC -XX:MaxRAMPercentage=75.0 -XX:InitialRAMPercentage=25.0 -javaagent:/app/opentelemetry-javaagent.jar"
+ENV OTEL_SERVICE_NAME=delivery
+ENV OTEL_TRACES_EXPORTER=otlp
+ENV OTEL_METRICS_EXPORTER=otlp
+ENV OTEL_LOGS_EXPORTER=otlp
+ENV OTEL_JAVAAGENT_EXTENSIONS=./pyroscope-otel.jar
+
+ENV PYROSCOPE_APPLICATION_NAME=delivery
+ENV PYROSCOPE_FORMAT=jfr
+ENV OTEL_PYROSCOPE_ADD_PROFILE_URL=false
+ENV OTEL_PYROSCOPE_ADD_PROFILE_BASELINE_URL=false
+
+ENV JAVA_TOOL_OPTIONS="-XX:+UseZGC -XX:MaxRAMPercentage=75.0 -XX:InitialRAMPercentage=25.0 -javaagent:./opentelemetry-javaagent.jar"
 
 EXPOSE 8083
 ENTRYPOINT ["java", "-jar", "/app/delivery.jar"]

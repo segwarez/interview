@@ -17,11 +17,11 @@ public class PaymentService {
     private final WarehouseClient warehouseClient;
 
     public void pay() {
-        log.info("Making payment.");
+        log.info("Making payment");
         waitForConfirmation();
-        log.info("Confirmation received.");
+        log.info("Confirmation received");
         updateWarehouse();
-        log.info("Warehouse updated.");
+        log.info("Warehouse updated");
     }
 
     @WithSpan("billing.wait_for_confirmation")
@@ -29,7 +29,7 @@ public class PaymentService {
         int delaySeconds = ThreadLocalRandom.current().nextInt(2, 6);
         try {
             TimeUnit.SECONDS.sleep(delaySeconds);
-        } catch (InterruptedException e) {
+        } catch (InterruptedException _) {
             Thread.currentThread().interrupt();
         }
     }

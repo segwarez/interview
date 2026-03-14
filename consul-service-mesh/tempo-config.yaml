@@ -1,15 +1,35 @@
-server:
-  http_listen_port: 3200
-
 distributor:
   receivers:
     otlp:
       protocols:
         http:
-          endpoint: 0.0.0.0:4318
+          endpoint: tempo:4318
 
 storage:
   trace:
     backend: local
+    wal:
+      path: /tmp/tempo/wal
     local:
-      path: /tmp/tempo/traces
+      path: /tmp/tempo/blocks
+
+overrides:
+  defaults:
+    metrics_generator:
+      processors: [service-graphs, span-metrics, local-blocks]
+
+      processor:
+        service_graphs:
+          enable_messaging_system_latency_histogram: true
+        span_metrics:
+          enable_target_info: true
+
+metrics_generator:
+  storage:
+    path: /tmp/tempo/generator/wal
+    remote_write:
+      - url: http://prometheus:9090/api/v1/write
+        send_exemplars: true
+
+  traces_storage:
+    path: /tmp/tempo/generator/traces
