@@ -1,7 +1,6 @@
 services:
   postgres:
     image: postgres:18.1
-    restart: always
     environment:
       POSTGRES_DB: testdb
       POSTGRES_USER: postgres
@@ -13,7 +12,6 @@ services:
 
   adminer:
     image: adminer
-    restart: always
     ports:
       - '8081:8080'
     depends_on:
@@ -21,7 +19,6 @@ services:
 
   prometheus:
     image: prom/prometheus:v3.10.0
-    restart: always
     volumes:
       - ./prometheus-config.yaml:/etc/prometheus/prometheus.yml
     ports:
@@ -29,6 +26,5 @@ services:
 
   grafana:
     image: grafana/grafana:12.4.0
-    restart: always
     ports:
       - '3000:3000'
