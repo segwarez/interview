@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: observability-kafka-streams
+
+  kafka:
+    bootstrap-servers: ${BOOTSTRAP_SERVERS:localhost:9092}

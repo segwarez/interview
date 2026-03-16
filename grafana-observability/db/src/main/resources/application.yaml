@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: observability-database
+
+  kafka:
+    bootstrap-servers: ${BOOTSTRAP_SERVERS:localhost:9092}
+
+  datasource:
+    url: jdbc:postgresql://${DATABASE_ADDRESS:localhost:5432}/observabilitydb
+    username: postgres
+    password: postgres
+
+  jpa:
+    open-in-view: false
+
+server:
+  port: 8081

@@ -1,0 +1,136 @@
+services:
+  postgres:
+    image: postgres:18.1
+    environment:
+      POSTGRES_DB: observabilitydb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.9.0
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  broker:
+    image: confluentinc/cp-kafka:7.9.0
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:29092, PLAINTEXT_HOST://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_JMX_PORT: 9997
+    depends_on:
+      - zookeeper
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:v0.7.2
+    environment:
+      KAFKA_CLUSTERS_0_NAME: Observability
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: broker:29092
+      KAFKA_CLUSTERS_0_METRICS_PORT: 9997
+      DYNAMIC_CONFIG_ENABLED: true
+    ports:
+      - '8082:8080'
+    depends_on:
+      - zookeeper
+      - broker
+
+  loki:
+    image: grafana/loki:3.6.7
+
+  tempo:
+    image: grafana/tempo:2.10.1
+    command:
+      - '-config.file=/etc/tempo.yaml'
+    volumes:
+      - ./tempo-config.yaml:/etc/tempo.yaml:ro
+    ports:
+      - '3200:3200'
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.147.0
+    command:
+      - '--config=/etc/otelcol/config.yaml'
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otelcol/config.yaml:ro
+    depends_on:
+      - loki
+      - tempo
+
+  prometheus:
+    image: prom/prometheus:v3.10.0
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--web.enable-remote-write-receiver'
+      - '--enable-feature=exemplar-storage'
+    volumes:
+      - ./prometheus-config.yaml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - '9090:9090'
+    depends_on:
+      - otel-collector
+
+  pyroscope:
+    image: grafana/pyroscope:1.19.0
+    environment:
+      JAEGER_AGENT_HOST: tempo
+      JAEGER_SAMPLER_TYPE: const
+      JAEGER_SAMPLER_PARAM: 1
+    command:
+      - '-config.file=/etc/pyroscope.yml'
+    ports:
+      - '4040:4040'
+    volumes:
+      - ./pyroscope-config.yaml:/etc/pyroscope.yml
+
+  grafana:
+    image: grafana/grafana:12.4.0
+    volumes:
+      - ./grafana-datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml:ro
+    ports:
+      - '3000:3000'
+    depends_on:
+      - loki
+      - tempo
+      - prometheus
+      - pyroscope
+
+  web:
+    build: ./web
+    restart: on-failure:5
+    environment:
+      BOOTSTRAP_SERVERS: broker:29092
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4318
+      PYROSCOPE_SERVER_ADDRESS: http://pyroscope:4040
+    ports:
+      - '8080:8080'
+    depends_on:
+      - broker
+
+  db:
+    build: ./db
+    restart: on-failure:5
+    environment:
+      BOOTSTRAP_SERVERS: broker:29092
+      DATABASE_ADDRESS: postgres:5432
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4318
+      PYROSCOPE_SERVER_ADDRESS: http://pyroscope:4040
+    ports:
+      - '8081:8081'
+    depends_on:
+      - broker
+
+  kstreams:
+    build: ./kstreams
+    restart: on-failure:5
+    environment:
+      BOOTSTRAP_SERVERS: broker:29092
+      DATABASE_ADDRESS: postgres:5432
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4318
+      PYROSCOPE_SERVER_ADDRESS: http://pyroscope:4040
+    depends_on:
+      - broker
+      - web
+      - db
