@@ -17,6 +17,8 @@ WORKDIR /app
 
 COPY --from=build /workspace/build/libs/kstreams.jar /app/kstreams.jar
 
+COPY ./jmx-config.yaml jmx-config.yaml
+
 ADD https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/download/v2.25.0/opentelemetry-javaagent.jar opentelemetry-javaagent.jar
 ADD https://github.com/grafana/otel-profiling-java/releases/download/v1.1.0/pyroscope-otel.jar pyroscope-otel.jar
 
@@ -31,7 +33,11 @@ ENV PYROSCOPE_FORMAT=jfr
 ENV OTEL_PYROSCOPE_ADD_PROFILE_URL=false
 ENV OTEL_PYROSCOPE_ADD_PROFILE_BASELINE_URL=false
 
-ENV JAVA_TOOL_OPTIONS="-XX:+UseZGC -XX:MaxRAMPercentage=75.0 -XX:InitialRAMPercentage=25.0 -javaagent:./opentelemetry-javaagent.jar"
+ENV JAVA_TOOL_OPTIONS="-XX:+UseZGC \
+    -XX:MaxRAMPercentage=75.0 \
+    -XX:InitialRAMPercentage=25.0 \
+    -javaagent:./opentelemetry-javaagent.jar \
+    -Dotel.jmx.config=./jmx-config.yaml"
 
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "/app/kstreams.jar"]

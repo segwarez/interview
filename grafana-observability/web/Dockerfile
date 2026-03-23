@@ -31,7 +31,10 @@ ENV PYROSCOPE_FORMAT=jfr
 ENV OTEL_PYROSCOPE_ADD_PROFILE_URL=false
 ENV OTEL_PYROSCOPE_ADD_PROFILE_BASELINE_URL=false
 
-ENV JAVA_TOOL_OPTIONS="-XX:+UseZGC -XX:MaxRAMPercentage=75.0 -XX:InitialRAMPercentage=25.0 -javaagent:./opentelemetry-javaagent.jar"
+ENV JAVA_TOOL_OPTIONS="-XX:+UseZGC \
+    -XX:MaxRAMPercentage=75.0 \
+    -XX:InitialRAMPercentage=25.0 \
+    -javaagent:./opentelemetry-javaagent.jar"
 
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "/app/web.jar"]

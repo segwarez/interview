@@ -1,0 +1,43 @@
+---
+rules:
+  - bean: kafka.streams:type=stream-task-metrics,thread-id=*,task-id=*
+    prefix: kafka.streams.task.
+    mapping:
+      process-latency-max:
+        metric: process.latency.max
+        type: gauge
+        unit: "ms"
+        desc: The maximum latency of calls to process
+
+      process-rate:
+        metric: process.rate
+        type: gauge
+        unit: "/s"
+        desc: The average number of calls to process per second
+
+      record-lateness-max:
+        metric: record.lateness.max
+        type: gauge
+        unit: "ms"
+        desc: The observed maximum lateness of records in milliseconds, measured by comparing the record timestamp with the current stream time
+
+      restore-remaining-records-total:
+        metric: restore.remaining.records
+        type: gauge
+        unit: "{records}"
+        desc: The total number of records remaining to be restored
+
+      punctuate-latency-max:
+        metric: punctuate.latency.max
+        type: gauge
+        unit: "ms"
+        desc: The maximum latency of calls to punctuate
+
+  - bean: kafka.streams:type=stream-thread-metrics,thread-id=*
+    prefix: kafka.streams.thread.
+    mapping:
+      blocked-time-ns-total:
+        metric: blocked.time
+        type: counter
+        unit: "ns"
+        desc: The total time the thread spent blocked on Kafka in nanosecondss
