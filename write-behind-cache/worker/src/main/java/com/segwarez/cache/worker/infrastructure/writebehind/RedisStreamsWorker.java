@@ -1,5 +1,7 @@
 package com.segwarez.cache.worker.infrastructure.writebehind;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.segwarez.cache.worker.domain.Event;
 import com.segwarez.cache.worker.infrastructure.repository.JPAEventRepository;
 import com.segwarez.cache.worker.infrastructure.repository.entity.EventEntity;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +11,6 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -26,6 +27,7 @@ public class RedisStreamsWorker {
 
     private final StringRedisTemplate stringRedisTemplate;
     private final JPAEventRepository jpaEventRepository;
+    private final ObjectMapper objectMapper;
 
     @Scheduled(fixedDelay = 100)
     public void processInBatch() {
@@ -56,14 +58,10 @@ public class RedisStreamsWorker {
 
     private Optional<EventEntity> toEventEntity(MapRecord<String, String, String> record) {
         try {
-            var value = record.getValue();
-            return Optional.of(new EventEntity(
-                    UUID.fromString(value.get("id")),
-                    value.get("type"),
-                    value.get("userId"),
-                    Instant.parse(value.get("timestamp")),
-                    value.get("payload")
-            ));
+            var jsonEvent = record.getValue().get("event");
+            if (jsonEvent == null) return Optional.empty();
+            var event = objectMapper.readValue(jsonEvent, Event.class);
+            return Optional.of(new EventEntity(event));
         } catch (Exception e) {
             log.error("Failed to parse record {}", record, e);
             return Optional.empty();
