@@ -28,7 +28,7 @@ public class EventDao {
         return jpaEventRepository.findById(id)
                 .map(entity -> {
                     Event event = entity.toDomain();
-                    redisCache.save(event);
+                    redisCache.set(event);
                     return event;
                 });
     }

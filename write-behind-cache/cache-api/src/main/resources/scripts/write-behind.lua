@@ -8,4 +8,6 @@ local streamId = redis.call("XADD", KEYS[2], "*",
     "event", ARGV[1]
 )
 
+redis.call("SET", KEYS[1], ARGV[1], "EX", 3600)
+
 return streamId

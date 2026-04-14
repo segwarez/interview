@@ -41,6 +41,17 @@ public class RedisCache {
         log.info("Saved event to stream with id {}", streamId);
     }
 
+    public void set(Event event) {
+        String eventJson = null;
+        try {
+            eventJson = objectMapper.writeValueAsString(event);
+        } catch (JsonProcessingException e) {
+            log.error("Error serializing event {}", event, e);
+            throw new RuntimeException(e);
+        }
+        stringRedisTemplate.opsForValue().set(event.getId().toString(), eventJson);
+    }
+
     public Optional<Event> get(UUID key) {
         String json = stringRedisTemplate.opsForValue().get(key.toString());
         if (json == null) return Optional.empty();
