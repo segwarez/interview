@@ -1,0 +1,36 @@
+plugins {
+    id 'base'
+}
+
+ext {
+    lombokVersion = '1.18.42'
+}
+
+allprojects {
+    group = 'com.segwarez'
+    version = '1.0.0'
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(25)
+        }
+    }
+
+    configurations.configureEach {
+        resolutionStrategy {
+            failOnVersionConflict()
+        }
+    }
+
+    tasks.withType(Test).configureEach {
+        useJUnitPlatform()
+    }
+}

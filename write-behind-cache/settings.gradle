@@ -1,0 +1,6 @@
+rootProject.name = 'write-behind-cache'
+
+include 'model'
+include 'persistence'
+include 'cache-api'
+include 'worker'

@@ -1,0 +1,11 @@
+package com.segwarez.cache;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class CacheApiApplication {
+	static void main(String[] args) {
+		SpringApplication.run(CacheApiApplication.class, args);
+	}
+}
