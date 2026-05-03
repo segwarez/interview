@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: order
+
+  mongodb:
+    host: localhost
+    port: 27017
+    database: order
+    username: order_user
+    password: test123
+
+  kafka:
+    bootstrap-servers: ${BOOTSTRAP_SERVERS:localhost:9092}
