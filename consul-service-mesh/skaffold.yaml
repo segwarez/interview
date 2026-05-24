@@ -1,0 +1,94 @@
+apiVersion: skaffold/v4beta13
+kind: Config
+metadata:
+  name: consul-service-mesh
+
+profiles:
+  - name: local
+    activation:
+      - kubeContext: minikube
+    build:
+      local:
+        push: false
+
+build:
+  artifacts:
+    - image: order
+      context: ./order
+      docker:
+        dockerfile: Dockerfile
+
+    - image: billing
+      context: ./billing
+      docker:
+        dockerfile: Dockerfile
+
+    - image: warehouse
+      context: ./warehouse
+      docker:
+        dockerfile: Dockerfile
+
+    - image: delivery
+      context: ./delivery
+      docker:
+        dockerfile: Dockerfile
+
+deploy:
+  statusCheck: true
+  statusCheckDeadlineSeconds: 300
+
+  helm:
+    releases:
+      - name: prometheus
+        repo: https://prometheus-community.github.io/helm-charts
+        remoteChart: kube-prometheus-stack
+        version: 81.5.0
+        namespace: observability
+        createNamespace: true
+        valuesFiles:
+          - ./k8s/helm/prometheus-values.yaml
+
+      - name: jaeger
+        repo: https://jaegertracing.github.io/helm-charts
+        remoteChart: jaeger
+        version: 4.8.0
+        namespace: observability
+        valuesFiles:
+          - ./k8s/helm/jaeger-values.yaml
+
+      - name: otel-collector
+        repo: https://open-telemetry.github.io/opentelemetry-helm-charts
+        remoteChart: opentelemetry-collector
+        version: 0.145.0
+        namespace: observability
+        valuesFiles:
+          - ./k8s/helm/otel-collector-values.yaml
+
+      - name: consul
+        repo: https://helm.releases.hashicorp.com
+        remoteChart: consul
+        version: 2.0.0
+        namespace: consul
+        createNamespace: true
+        valuesFiles:
+          - ./k8s/helm/consul-values.yaml
+
+      - name: kong
+        repo: https://charts.konghq.com
+        remoteChart: kong
+        version: 3.2.0
+        namespace: kong
+        createNamespace: true
+        valuesFiles:
+          - ./k8s/helm/kong-values.yaml
+
+  kubectl: {}
+
+manifests:
+  rawYaml:
+    - ./k8s/consul-defaults.yaml
+    - ./k8s/kong-gateway.yaml
+    - ./warehouse/k8s/*.yaml
+    - ./delivery/k8s/*.yaml
+    - ./billing/k8s/*.yaml
+    - ./order/k8s/*.yaml

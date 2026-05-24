@@ -3,17 +3,16 @@ package com.segwarez.billing.domain;
 import com.segwarez.billing.infrastructure.external.WarehouseClient;
 import io.opentelemetry.instrumentation.annotations.WithSpan;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PaymentService {
-    private static final Logger log = LoggerFactory.getLogger(PaymentService.class);
     private final WarehouseClient warehouseClient;
 
     public void pay() {

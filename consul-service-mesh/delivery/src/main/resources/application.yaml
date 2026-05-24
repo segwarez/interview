@@ -11,3 +11,7 @@ management:
       base-path: /
       exposure:
         include: health
+  endpoint:
+    health:
+      probes:
+        enabled: true

@@ -11,7 +11,10 @@ management:
       base-path: /
       exposure:
         include: health
+  endpoint:
+    health:
+      probes:
+        enabled: true
 
 warehouse:
-  host: ${WAREHOUSE_HOST:localhost}
-  port: ${WAREHOUSE_PORT:8081}
+  url: ${WAREHOUSE_URL:http://localhost:8081}

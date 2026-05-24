@@ -1,7 +1,6 @@
 package com.segwarez.warehouse.application;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,10 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+@Slf4j
 @RestController
 public class WarehouseController {
-    private static final Logger log = LoggerFactory.getLogger(WarehouseController.class);
-
     @GetMapping(value = "/reserve", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> reserve() {
         log.info("Reserving stock");

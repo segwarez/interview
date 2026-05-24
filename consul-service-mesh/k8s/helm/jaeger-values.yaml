@@ -1,0 +1,26 @@
+provisionDataStore:
+  cassandra: false
+  elasticsearch: false
+  kafka: false
+
+config:
+  jaeger_storage:
+    backends:
+      primary_store:
+        memory:
+          max_traces: 100000
+
+allInOne:
+  enabled: true
+
+agent:
+  enabled: false
+
+collector:
+  enabled: false
+
+ingester:
+  enabled: false
+
+query:
+  enabled: true

@@ -10,15 +10,13 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
 @Configuration
 public class BillingWebConfig {
-    @Value("${billing.host}")
-    private String host;
-    @Value("${billing.port}")
-    private int port;
+    @Value("${billing.url}")
+    private String billingUrl;
 
     @Bean
     RestClient billingRestClient() {
         return RestClient.builder()
-                .baseUrl("http://" + host + ":" + port)
+                .baseUrl(billingUrl)
                 .build();
     }
 

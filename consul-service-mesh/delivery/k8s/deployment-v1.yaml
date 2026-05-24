@@ -1,31 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: order
+  name: delivery-v1
   labels:
-    app: order
+    app: delivery
+    version: v1
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: order
+      app: delivery
+      version: v1
   template:
     metadata:
       labels:
-        app: order
+        app: delivery
+        version: v1
       annotations:
-        consul.hashicorp.com/connect-inject: 'true'
-        consul.hashicorp.com/connect-service-upstreams: "billing:8082, delivery:8083, warehouse:8081"
-        consul.hashicorp.com/transparent-proxy-exclude-inbound-ports: "8080"
+        consul.hashicorp.com/connect-inject: "true"
+        consul.hashicorp.com/service-meta-version: "v1"
     spec:
-      serviceAccountName: order
+      serviceAccountName: delivery
       containers:
-        - name: order
-          image: order
+        - name: delivery
+          image: delivery
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
-              containerPort: 8080
+              containerPort: 8083
           readinessProbe:
             httpGet:
               path: /health/readiness

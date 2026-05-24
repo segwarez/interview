@@ -10,15 +10,13 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
 @Configuration
 public class DeliveryWebConfig {
-    @Value("${delivery.host}")
-    private String host;
-    @Value("${delivery.port}")
-    private int port;
+    @Value("${delivery.url}")
+    private String deliveryUrl;
 
     @Bean
     RestClient deliveryRestClient() {
         return RestClient.builder()
-                .baseUrl("http://" + host + ":" + port)
+                .baseUrl(deliveryUrl)
                 .build();
     }
 

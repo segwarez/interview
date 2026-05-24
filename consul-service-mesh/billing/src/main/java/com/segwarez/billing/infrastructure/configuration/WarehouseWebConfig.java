@@ -10,15 +10,13 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
 @Configuration
 public class WarehouseWebConfig {
-    @Value("${warehouse.host}")
-    private String host;
-    @Value("${warehouse.port}")
-    private int port;
+    @Value("${warehouse.url}")
+    private String warehouseUrl;
 
     @Bean
     RestClient warehouseRestClient() {
         return RestClient.builder()
-                .baseUrl("http://" + host + ":" + port)
+                .baseUrl(warehouseUrl)
                 .build();
     }
 

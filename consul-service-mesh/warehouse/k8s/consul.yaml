@@ -1,0 +1,14 @@
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceIntentions
+metadata:
+  name: warehouse
+  labels:
+    app: warehouse
+spec:
+  destination:
+    name: warehouse
+  sources:
+    - name: billing
+      action: allow
+    - name: order
+      action: allow

@@ -1,0 +1,11 @@
+deployment:
+  serviceAccount:
+    name: kong-gateway
+
+admin:
+  enabled: true
+
+podAnnotations:
+  consul.hashicorp.com/connect-inject: "true"
+  consul.hashicorp.com/connect-service: "kong-gateway"
+  consul.hashicorp.com/transparent-proxy-exclude-inbound-ports: "8000,8444"
