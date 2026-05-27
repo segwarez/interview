@@ -20,7 +20,6 @@ COPY --from=build /workspace/build/libs/billing.jar /app/billing.jar
 ADD https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/download/v2.25.0/opentelemetry-javaagent.jar opentelemetry-javaagent.jar
 
 ENV OTEL_SERVICE_NAME=billing
-ENV OTEL_EXPORTER_OTLP_PROTOCOL=grpc
 ENV OTEL_TRACES_EXPORTER=otlp
 ENV OTEL_METRICS_EXPORTER=otlp
 ENV OTEL_LOGS_EXPORTER=none

@@ -1,4 +1,26 @@
 apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceDefaults
+metadata:
+  name: billing
+  labels:
+    app: billing
+spec:
+  protocol: http
+  upstreamConfig:
+    overrides:
+      - name: warehouse
+        passiveHealthCheck:
+          interval: 5s
+          maxFailures: 10
+          enforcingConsecutive5xx: 100
+          maxEjectionPercent: 100
+          baseEjectionTime: 10s
+        limits:
+          maxConnections: 30
+          maxPendingRequests: 40
+          maxConcurrentRequests: 50
+---
+apiVersion: consul.hashicorp.com/v1alpha1
 kind: ServiceIntentions
 metadata:
   name: billing

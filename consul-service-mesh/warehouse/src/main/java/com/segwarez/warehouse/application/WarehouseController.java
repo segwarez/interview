@@ -21,7 +21,7 @@ public class WarehouseController {
             return ResponseEntity.ok().build();
         }
         log.info("Not enough stock");
-        return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        return ResponseEntity.internalServerError().build();
     }
 
     @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)

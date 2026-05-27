@@ -1,0 +1,33 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: consul-sidecar-metrics
+  namespace: observability
+spec:
+  namespaceSelector:
+    any: true
+  selector:
+    matchExpressions:
+      - key: consul.hashicorp.com/connect-inject-status
+        operator: Exists
+  podMetricsEndpoints:
+    - targetPort: 20200
+      path: /metrics
+      interval: 5s
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: consul-api-gateway-metrics
+  namespace: observability
+spec:
+  namespaceSelector:
+    matchNames:
+      - consul
+  selector:
+    matchLabels:
+      component: api-gateway
+  podMetricsEndpoints:
+    - targetPort: 20200
+      path: /metrics
+      interval: 5s

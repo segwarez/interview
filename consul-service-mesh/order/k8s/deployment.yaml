@@ -14,9 +14,8 @@ spec:
       labels:
         app: order
       annotations:
-        consul.hashicorp.com/connect-inject: 'true'
+        consul.hashicorp.com/connect-inject: "true"
         consul.hashicorp.com/connect-service-upstreams: "billing:8082, delivery:8083, warehouse:8081"
-        consul.hashicorp.com/transparent-proxy-exclude-inbound-ports: "8080"
     spec:
       serviceAccountName: order
       containers:
@@ -40,7 +39,7 @@ spec:
             periodSeconds: 10
           env:
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
-              value: "http://otel-collector-opentelemetry-collector.observability:4317"
+              value: "http://otel-collector-opentelemetry-collector.observability:4318"
           resources:
             requests:
               memory: 1Gi

@@ -24,15 +24,15 @@ client:
 
 connectInject:
   enabled: true
+  cni:
+    enabled: true
 
 ui:
   enabled: true
-  service:
-    type: ClusterIP
 
   metrics:
     enabled: true
-    baseURL: http://prometheus-kube-prometheus-prometheus.observability:9090
+    baseURL: "http://prometheus-kube-prometheus-prometheus.observability:9090"
 
   dashboardURLTemplates:
-    service: "http://localhost:3000/d/lDlaj-NGz/service-overview?orgId=1&var-service={{Service.Name}}&var-namespace={{Service.Namespace}}&var-dc={{Datacenter}}"
+    service: "http://localhost:3000/d/heHhNSFf6Na8vIZWRs8H/envoy-global?orgId=1&var-service={{Service.Name}}&var-namespace={{Service.Namespace}}&var-dc={{Datacenter}}"

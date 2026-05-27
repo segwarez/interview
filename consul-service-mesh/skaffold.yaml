@@ -53,8 +53,6 @@ deploy:
         remoteChart: jaeger
         version: 4.8.0
         namespace: observability
-        valuesFiles:
-          - ./k8s/helm/jaeger-values.yaml
 
       - name: otel-collector
         repo: https://open-telemetry.github.io/opentelemetry-helm-charts
@@ -73,21 +71,13 @@ deploy:
         valuesFiles:
           - ./k8s/helm/consul-values.yaml
 
-      - name: kong
-        repo: https://charts.konghq.com
-        remoteChart: kong
-        version: 3.2.0
-        namespace: kong
-        createNamespace: true
-        valuesFiles:
-          - ./k8s/helm/kong-values.yaml
-
   kubectl: {}
 
 manifests:
   rawYaml:
+    - ./k8s/api-gateway.yaml
     - ./k8s/consul-defaults.yaml
-    - ./k8s/kong-gateway.yaml
+    - ./k8s/consul-metrics.yaml
     - ./warehouse/k8s/*.yaml
     - ./delivery/k8s/*.yaml
     - ./billing/k8s/*.yaml
