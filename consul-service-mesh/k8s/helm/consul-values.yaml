@@ -35,4 +35,4 @@ ui:
     baseURL: "http://prometheus-kube-prometheus-prometheus.observability:9090"
 
   dashboardURLTemplates:
-    service: "http://localhost:3000/d/heHhNSFf6Na8vIZWRs8H/envoy-global?orgId=1&var-service={{Service.Name}}&var-namespace={{Service.Namespace}}&var-dc={{Datacenter}}"
+    service: "http://localhost:3000/d/adwqlwl/application-performance-monitoring?orgId=1&from=now-15m&to=now&timezone=browser&var-service={{Service.Name}}"

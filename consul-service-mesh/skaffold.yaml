@@ -48,6 +48,14 @@ deploy:
         valuesFiles:
           - ./k8s/helm/prometheus-values.yaml
 
+      - name: loki
+        repo: https://grafana-community.github.io/helm-charts
+        remoteChart: loki
+        version: 17.1.1
+        namespace: observability
+        valuesFiles:
+          - ./k8s/helm/loki-values.yaml
+
       - name: jaeger
         repo: https://jaegertracing.github.io/helm-charts
         remoteChart: jaeger
@@ -78,6 +86,7 @@ manifests:
     - ./k8s/api-gateway.yaml
     - ./k8s/consul-defaults.yaml
     - ./k8s/consul-metrics.yaml
+    - ./k8s/apm-dashboard.yaml
     - ./warehouse/k8s/*.yaml
     - ./delivery/k8s/*.yaml
     - ./billing/k8s/*.yaml

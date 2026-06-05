@@ -42,7 +42,7 @@ spec:
             periodSeconds: 10
           env:
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
-              value: "http://otel-collector-opentelemetry-collector.observability:4318"
+              value: "http://otel-collector-opentelemetry-collector.observability:4317"
           resources:
             requests:
               memory: 1Gi

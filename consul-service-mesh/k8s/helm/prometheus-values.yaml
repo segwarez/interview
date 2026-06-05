@@ -3,11 +3,16 @@ alertmanager:
 
 grafana:
   sidecar:
+    dashboards:
+      enabled: true
+      label: grafana_dashboard
+      searchNamespace: ALL
     datasources:
       exemplarTraceIdDestinations:
         datasourceUid: jaeger
         traceIdLabelName: trace_id
         urlDisplayLabel: View traces
+
   additionalDataSources:
     - name: Jaeger
       type: jaeger
@@ -22,6 +27,27 @@ grafana:
           tags:
             - key: service.name
               value: service
+        tracesToLogsV2:
+          datasourceUid: loki
+          spanStartTimeShift: "-5m"
+          spanEndTimeShift: "5m"
+          tags:
+            - key: service.name
+              value: service
+          filterByTraceID: true
+          filterBySpanID: false
+
+    - name: Loki
+      type: loki
+      uid: loki
+      access: proxy
+      url: http://loki:3100
+      jsonData:
+        derivedFields:
+          - name: TraceID
+            matcherRegex: '"trace_id":"([a-f0-9]+)"'
+            datasourceUid: jaeger
+            url: "$${__value.raw}"
 
 prometheus:
   prometheusSpec:
