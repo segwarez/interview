@@ -1,6 +1,6 @@
 # Write behind cache with Redis and Postgres
 
-```
+```shell script
 curl -X POST http://localhost:8080/events \
      -H "Content-Type: application/json" \
      -d '{

@@ -2,7 +2,7 @@
 
 ## How To: Convert video to FFmpeg format
 
-```
+```shell script
 ffmpeg -i input.mov \
   -codec: copy \
   -start_number 0 \
