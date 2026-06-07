@@ -1,0 +1,83 @@
+type Query {
+  reservation(id: ID!): Reservation
+  reservationByBookingReference(bookingReference: String!): Reservation
+  reservations: [Reservation!]!
+}
+
+type Mutation {
+  createReservation(input: CreateReservationInput!): Reservation!
+  cancelReservation(id: ID!): Reservation!
+}
+
+type Reservation {
+  id: ID!
+  bookingReference: String!
+  status: ReservationStatus!
+  passengers: [Passenger!]!
+  itinerary: Itinerary!
+}
+
+type Passenger {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  type: PassengerType!
+}
+
+type Itinerary {
+  id: ID!
+  segments: [Segment!]!
+}
+
+type Segment {
+  id: ID!
+  origin: Airport!
+  destination: Airport!
+  legs: [Leg!]!
+}
+
+type Leg {
+  id: ID!
+  flightNumber: String!
+  departureAirport: Airport!
+  arrivalAirport: Airport!
+  aircraft: Aircraft!
+}
+
+type Airport {
+  id: ID!
+  code: String!
+  name: String!
+  city: String!
+  country: String!
+}
+
+type Aircraft {
+  id: ID!
+  tailNumber: String!
+  manufacturer: String!
+  model: String!
+  bodyType: AircraftBodyType!
+  numberOfSeats: Int!
+}
+
+input CreateReservationInput {
+  bookingReference: String!
+}
+
+enum ReservationStatus {
+  CREATED
+  CONFIRMED
+  CANCELLED
+}
+
+enum PassengerType {
+  ADULT
+  CHILD
+  INFANT
+}
+
+enum AircraftBodyType {
+  NARROW_BODY
+  WIDE_BODY
+}
