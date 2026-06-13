@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.3</version>
+        <version>4.0.7</version>
         <relativePath/>
     </parent>
     <groupId>com.segwarez</groupId>
@@ -13,8 +13,8 @@
     <version>1.0.0</version>
     <name>drools-rule-evaluator</name>
     <properties>
-        <java.version>25</java.version>
-        <drools.version>8.41.0.Final</drools.version>
+        <java.version>26</java.version>
+        <drools.version>10.2.0</drools.version>
     </properties>
     <dependencies>
         <dependency>

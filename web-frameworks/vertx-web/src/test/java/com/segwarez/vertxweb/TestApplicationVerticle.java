@@ -11,11 +11,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 class TestApplicationVerticle {
     @BeforeEach
     void deploy_verticle(Vertx vertx, VertxTestContext testContext) {
-        vertx.deployVerticle(new ApplicationVerticle(), testContext.succeeding(id -> testContext.completeNow()));
+        vertx.deployVerticle(new ApplicationVerticle()).onComplete(testContext.succeeding(id -> testContext.completeNow()));
     }
 
     @Test
-    void verticle_deployed(VertxTestContext testContext) {
+    void verticle_deployed(Vertx vertx, VertxTestContext testContext) throws Throwable {
         testContext.completeNow();
     }
 }

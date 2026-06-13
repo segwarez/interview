@@ -6,12 +6,12 @@ import com.segwarez.transactionaloutbox.infrastructure.repository.entity.EventTy
 import com.segwarez.transactionaloutbox.infrastructure.repository.entity.OutboxEntity;
 import com.segwarez.transactionaloutbox.infrastructure.repository.entity.PostEntity;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-@Component
+@Repository
 @AllArgsConstructor
-public class PostDAO implements PostRepository {
+public class PostDao implements PostRepository {
     private final JPAPostRepository jpaPostRepository;
     private final JPAOutboxRepository jpaOutboxRepository;
 

@@ -2,11 +2,11 @@ package com.segwarez.transactionaloutbox.application.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Value;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Value
-@AllArgsConstructor
+@Data
+@NoArgsConstructor
 public class CreatePostRequest {
     @NotBlank
     @Size(max = 150)

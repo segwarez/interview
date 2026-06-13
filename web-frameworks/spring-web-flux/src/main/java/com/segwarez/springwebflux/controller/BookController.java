@@ -48,8 +48,8 @@ public class BookController {
                 .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
     }
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Mono<ResponseEntity<Book>> createBook(@Valid @RequestBody CreateBookRequest createBookRequest, ServerHttpRequest request) {
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Mono<ResponseEntity<Void>> createBook(@Valid @RequestBody CreateBookRequest createBookRequest, ServerHttpRequest request) {
         return bookService.create(
                 createBookRequest.getTitle(),
                 createBookRequest.getAuthor(),
@@ -62,7 +62,7 @@ public class BookController {
     }
 
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Mono<ResponseEntity<Book>> updateBook(@PathVariable("id") UUID id, @RequestBody UpdateBookRequest updateBookRequest) {
+    public Mono<ResponseEntity<Book>> updateBook(@PathVariable("id") UUID id, @Valid @RequestBody UpdateBookRequest updateBookRequest) {
         return bookService.update(
                 id,
                 updateBookRequest.getTitle(),

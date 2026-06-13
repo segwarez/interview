@@ -82,6 +82,17 @@ public class BookDao implements BookRepository {
     }
 
     @Override
+    public Book update(Book book) {
+        return jpaBookRepository.update(new BookEntity(
+                book.getId(),
+                book.getTitle(),
+                book.getAuthor(),
+                book.getGenre(),
+                book.getDescription(),
+                book.isPublished())).toBook();
+    }
+
+    @Override
     public void delete(UUID id) {
         jpaBookRepository.deleteById(id);
 

@@ -1,7 +1,6 @@
 package com.segwarez.transactionaloutbox.application.rest;
 
 import com.segwarez.transactionaloutbox.application.request.CreatePostRequest;
-import com.segwarez.transactionaloutbox.domain.Post;
 import com.segwarez.transactionaloutbox.domain.service.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +18,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class PostController {
     private final PostService postService;
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Post> createPost(@RequestBody @Valid CreatePostRequest request) {
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> createPost(@RequestBody @Valid CreatePostRequest request) {
         var id = postService.create(
                 request.getTitle(),
                 request.getAuthor(),

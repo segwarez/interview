@@ -2,7 +2,7 @@ services:
   postgres:
     image: postgres:18.1
     environment:
-      POSTGRES_DB: testdb
+      POSTGRES_DB: book
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     volumes:

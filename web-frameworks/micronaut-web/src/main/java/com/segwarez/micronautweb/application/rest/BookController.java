@@ -65,7 +65,7 @@ public class BookController {
     }
 
     @Post(produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
-    public HttpResponse<Book> createBook(@Body @Valid CreateBookRequest createBookRequest, HttpRequest request) {
+    public HttpResponse<Book> createBook(@Valid @Body CreateBookRequest createBookRequest, HttpRequest request) {
         var id = bookService.create(
                 createBookRequest.getTitle(),
                 createBookRequest.getAuthor(),
@@ -75,7 +75,7 @@ public class BookController {
     }
 
     @Put(value = "/{id}", produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
-    public HttpResponse<Book> updateBook(@PathVariable("id") UUID id, @Body UpdateBookRequest request) {
+    public HttpResponse<Book> updateBook(@PathVariable("id") UUID id, @Valid @Body UpdateBookRequest request) {
         var optionalBook = bookService.update(
                 id,
                 request.getTitle(),

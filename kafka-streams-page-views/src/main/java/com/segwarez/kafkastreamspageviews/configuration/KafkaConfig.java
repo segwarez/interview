@@ -18,9 +18,9 @@ import java.util.Map;
 
 import static org.apache.kafka.streams.StreamsConfig.*;
 
-@Configuration
 @EnableKafka
 @EnableKafkaStreams
+@Configuration
 public class KafkaConfig {
     public static final String PAGE_VIEW_EVENT_TOPIC = "com.segwarez.PageViewEvent";
     public static final String PAGE_VIEW_EVENT_STORE = "com.segwarez.PageViewEventStore";

@@ -1,9 +1,9 @@
-FROM eclipse-temurin:25-jdk AS build
+FROM eclipse-temurin:26-jdk AS build
 WORKDIR /workspace
 COPY . .
 RUN ./gradlew --no-daemon clean bootJar
 
-FROM eclipse-temurin:25-jre AS runtime
+FROM eclipse-temurin:26-jre AS runtime
 
 LABEL \
   org.opencontainers.image.title="delivery-service" \

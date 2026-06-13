@@ -46,8 +46,8 @@ public class BookController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Book> createBook(@Valid @RequestBody CreateBookRequest request) {
+    @PostMapping( consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> createBook(@Valid @RequestBody CreateBookRequest request) {
         var id = bookService.create(
                 request.getTitle(),
                 request.getAuthor(),
@@ -58,7 +58,7 @@ public class BookController {
     }
 
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Book> updateBook(@PathVariable("id") UUID id, @RequestBody UpdateBookRequest request) {
+    public ResponseEntity<Book> updateBook(@PathVariable("id") UUID id, @Valid @RequestBody UpdateBookRequest request) {
         var optionalBook = bookService.update(
                 id,
                 request.getTitle(),

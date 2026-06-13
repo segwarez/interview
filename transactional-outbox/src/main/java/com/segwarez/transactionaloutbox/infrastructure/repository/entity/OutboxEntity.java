@@ -12,13 +12,14 @@ import java.util.UUID;
 
 @Data
 @Entity
-@Table(name = "outbox")
+@Table(name = "outbox_events")
 @EntityListeners(AuditingEntityListener.class)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 public class OutboxEntity {
     @Id
     @EqualsAndHashCode.Include
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID eventId;
     @Enumerated(EnumType.STRING)
     private EventType eventType;
@@ -28,7 +29,6 @@ public class OutboxEntity {
     private LocalDateTime createdAt;
 
     public OutboxEntity(EventType eventType, UUID postId) {
-        this.eventId = UUID.randomUUID();
         this.eventType = eventType;
         this.postId = postId;
     }

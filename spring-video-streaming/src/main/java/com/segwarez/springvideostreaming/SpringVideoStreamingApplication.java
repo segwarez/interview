@@ -7,7 +7,7 @@ import java.util.Locale;
 
 @SpringBootApplication
 public class SpringVideoStreamingApplication {
-    public static void main(String[] args) {
+    static void main(String[] args) {
         Locale.setDefault(Locale.UK);
         SpringApplication.run(SpringVideoStreamingApplication.class, args);
     }

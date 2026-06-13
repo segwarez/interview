@@ -47,7 +47,7 @@ public class DomainBookService implements BookService {
         book.setGenre(Genre.valueOf(genre));
         book.setDescription(description);
         book.setPublished(published);
-        return Optional.of(bookRepository.save(book));
+        return Optional.of(bookRepository.update(book));
     }
 
     @Override

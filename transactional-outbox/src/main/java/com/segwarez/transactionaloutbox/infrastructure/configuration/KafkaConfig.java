@@ -19,8 +19,8 @@ import org.springframework.kafka.support.serializer.JacksonJsonSerde;
 import java.util.HashMap;
 import java.util.Map;
 
-@Configuration
 @EnableKafka
+@Configuration
 public class KafkaConfig {
     public static final String OUTBOX_TOPIC = "com.segwarez.outbox";
     @Value(value = "${spring.kafka.bootstrap-servers:localhost:9092}")

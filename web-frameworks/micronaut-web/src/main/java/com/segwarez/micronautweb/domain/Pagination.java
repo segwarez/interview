@@ -8,7 +8,7 @@ import java.util.List;
 @Value
 @AllArgsConstructor
 public class Pagination {
-    private int pageNumber;
-    private int pageSize;
-    private List<SortOrder> sortOrders;
+    int pageNumber;
+    int pageSize;
+    List<SortOrder> sortOrders;
 }

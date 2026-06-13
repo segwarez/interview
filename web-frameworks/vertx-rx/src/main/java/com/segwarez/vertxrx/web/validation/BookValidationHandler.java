@@ -1,18 +1,17 @@
 package com.segwarez.vertxrx.web.validation;
 
 import com.segwarez.vertxrx.service.Genre;
-import io.vertx.json.schema.SchemaRouterOptions;
+import io.vertx.json.schema.Draft;
+import io.vertx.json.schema.JsonSchemaOptions;
+import io.vertx.json.schema.OutputFormat;
 import io.vertx.json.schema.common.dsl.ObjectSchemaBuilder;
-import io.vertx.rxjava3.ext.web.validation.ValidationHandler;
 import io.vertx.rxjava3.ext.web.validation.RequestPredicate;
+import io.vertx.rxjava3.ext.web.validation.ValidationHandler;
 import io.vertx.rxjava3.ext.web.validation.builder.Bodies;
 import io.vertx.rxjava3.ext.web.validation.builder.ParameterProcessorFactory;
 import io.vertx.rxjava3.ext.web.validation.builder.Parameters;
 import io.vertx.rxjava3.ext.web.validation.builder.ValidationHandlerBuilder;
-import io.vertx.rxjava3.json.schema.SchemaParser;
-import io.vertx.rxjava3.json.schema.SchemaRouter;
-import io.vertx.rxjava3.core.Vertx;
-import lombok.RequiredArgsConstructor;
+import io.vertx.rxjava3.json.schema.SchemaRepository;
 
 import java.util.Arrays;
 
@@ -20,40 +19,45 @@ import static io.vertx.json.schema.common.dsl.Keywords.maxLength;
 import static io.vertx.json.schema.common.dsl.Keywords.minLength;
 import static io.vertx.json.schema.common.dsl.Schemas.*;
 
-@RequiredArgsConstructor
 public class BookValidationHandler {
-    private final Vertx vertx;
+    private final SchemaRepository schemaRepository = SchemaRepository.create(
+        new JsonSchemaOptions()
+            .setBaseUri("app://schemas/")
+            .setDraft(Draft.DRAFT7)
+            .setOutputFormat(OutputFormat.Basic)
+    );
 
     public ValidationHandler getAllBooks() {
-        final SchemaParser schemaParser = buildSchemaParser();
-        return ValidationHandlerBuilder.create(schemaParser).queryParameter(buildTitlePathParameter()).build();
+        return ValidationHandlerBuilder.create(schemaRepository)
+            .queryParameter(buildTitleQueryParameter())
+            .build();
     }
 
     public ValidationHandler getBookById() {
-        final SchemaParser schemaParser = buildSchemaParser();
-        return ValidationHandlerBuilder.create(schemaParser).pathParameter(buildIdPathParameter()).build();
+        return ValidationHandlerBuilder.create(schemaRepository)
+            .pathParameter(buildIdPathParameter())
+            .build();
     }
 
     public ValidationHandler createBook() {
-        final SchemaParser schemaParser = buildSchemaParser();
-        final ObjectSchemaBuilder schemaBuilder = buildCreateBodySchemaBuilder();
-        return ValidationHandlerBuilder.create(schemaParser).predicate(RequestPredicate.BODY_REQUIRED).body(Bodies.json(schemaBuilder)).build();
+        return ValidationHandlerBuilder.create(schemaRepository)
+            .predicate(RequestPredicate.BODY_REQUIRED)
+            .body(Bodies.json(buildCreateBodySchemaBuilder()))
+            .build();
     }
 
     public ValidationHandler updateBook() {
-        final SchemaParser schemaParser = buildSchemaParser();
-        final ObjectSchemaBuilder schemaBuilder = buildUpdateBodySchemaBuilder();
-
-        return ValidationHandlerBuilder.create(schemaParser).predicate(RequestPredicate.BODY_REQUIRED).body(Bodies.json(schemaBuilder)).pathParameter(buildIdPathParameter()).build();
+        return ValidationHandlerBuilder.create(schemaRepository)
+            .predicate(RequestPredicate.BODY_REQUIRED)
+            .body(Bodies.json(buildUpdateBodySchemaBuilder()))
+            .pathParameter(buildIdPathParameter())
+            .build();
     }
 
     public ValidationHandler deleteBook() {
-        final SchemaParser schemaParser = buildSchemaParser();
-        return ValidationHandlerBuilder.create(schemaParser).pathParameter(buildIdPathParameter()).build();
-    }
-
-    private SchemaParser buildSchemaParser() {
-        return SchemaParser.createDraft7SchemaParser(SchemaRouter.create(vertx, new SchemaRouterOptions()));
+        return ValidationHandlerBuilder.create(schemaRepository)
+            .pathParameter(buildIdPathParameter())
+            .build();
     }
 
     private ObjectSchemaBuilder buildCreateBodySchemaBuilder() {
@@ -77,7 +81,7 @@ public class BookValidationHandler {
         return Parameters.param("id", stringSchema());
     }
 
-    private ParameterProcessorFactory buildTitlePathParameter() {
+    private ParameterProcessorFactory buildTitleQueryParameter() {
         return Parameters.optionalParam("title", stringSchema());
     }
 }

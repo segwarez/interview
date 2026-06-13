@@ -4,7 +4,7 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 plugins {
     java
     application
-    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("com.gradleup.shadow") version "9.2.2"
 }
 
 group = "com.segwarez"
@@ -14,18 +14,14 @@ repositories {
     mavenCentral()
 }
 
-val vertxVersion = "4.5.7"
-val ongresScramVersion = "2.1"
-val micrometerPrometheusVersion = "1.12.5"
-val jacksonVersion = "2.17.1"
-val lombokVersion = "1.18.32"
+val vertxVersion = "5.1.2"
+val micrometerPrometheusVersion = "1.17.0"
+val jacksonVersion = "2.22.0"
+val lombokVersion = "1.18.38"
 val junitJupiterVersion = "5.9.1"
 
 val mainVerticleName = "com.segwarez.vertxrx.ApplicationVerticle"
-val launcherClassName = "io.vertx.core.Launcher"
-
-val watchForChange = "src/**/*"
-val doOnChange = "${projectDir}/gradlew classes"
+val launcherClassName = "io.vertx.launcher.application.VertxApplication"
 
 application {
     mainClass.set(launcherClassName)
@@ -36,21 +32,21 @@ dependencies {
     implementation("io.vertx:vertx-rx-java3")
     implementation("io.vertx:vertx-web")
     implementation("io.vertx:vertx-web-validation")
-    implementation("io.vertx:vertx-json-schema")
     implementation("io.vertx:vertx-pg-client")
-    implementation("com.ongres.scram:client:$ongresScramVersion")
     implementation("io.vertx:vertx-micrometer-metrics")
     implementation("io.micrometer:micrometer-registry-prometheus:$micrometerPrometheusVersion")
+    implementation("org.slf4j:slf4j-api")
     implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
     compileOnly("org.projectlombok:lombok:$lombokVersion")
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
     testImplementation("io.vertx:vertx-junit5")
     testImplementation("org.junit.jupiter:junit-jupiter:$junitJupiterVersion")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_26
+    targetCompatibility = JavaVersion.VERSION_26
 }
 
 tasks.withType<ShadowJar> {
@@ -69,5 +65,5 @@ tasks.withType<Test> {
 }
 
 tasks.withType<JavaExec> {
-    args = listOf("run", mainVerticleName, "--launcher-class=$launcherClassName", "--on-redeploy=$doOnChange")
+    args = listOf(mainVerticleName)
 }

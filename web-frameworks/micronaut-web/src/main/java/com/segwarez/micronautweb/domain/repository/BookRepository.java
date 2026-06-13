@@ -19,6 +19,8 @@ public interface BookRepository {
 
     Book save(Book book);
 
+    Book update(Book book);
+
     void delete(UUID id);
 
     void deleteAll();

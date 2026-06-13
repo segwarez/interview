@@ -12,13 +12,13 @@ import lombok.Value;
 public class UpdateBookRequest {
     @NotNull
     @Size(min=1,max = 255)
-    private String title;
+    String title;
     @NotNull
     @Size(min=1,max = 255)
-    private String author;
+    String author;
     @EnumValidator(enumClass = Genre.class)
-    private String genre;
+    String genre;
     @Size(max = 1000)
-    private String description;
-    private boolean published;
+    String description;
+    boolean published;
 }

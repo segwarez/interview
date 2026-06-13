@@ -6,6 +6,6 @@ import lombok.Value;
 @Value
 @AllArgsConstructor
 public class SortOrder {
-    private String field;
-    private SortDirection direction;
+    String field;
+    SortDirection direction;
 }

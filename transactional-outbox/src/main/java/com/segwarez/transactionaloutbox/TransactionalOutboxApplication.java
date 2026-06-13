@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableJpaAuditing
 @SpringBootApplication
 public class TransactionalOutboxApplication {
-    public static void main(String[] args) {
+    static void main(String[] args) {
         SpringApplication.run(TransactionalOutboxApplication.class, args);
     }
 }
