@@ -20,6 +20,7 @@ public class Book {
     private boolean published;
 
     public Book(String title, String author, Genre genre, String description, boolean published) {
+        this.id = UUID.randomUUID();
         this.title = title;
         this.author = author;
         this.genre = genre;

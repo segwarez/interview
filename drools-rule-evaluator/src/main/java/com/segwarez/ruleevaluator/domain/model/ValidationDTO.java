@@ -9,8 +9,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class ValidationDTO {
-    private Order order;
-    private List<String> validationErrors;
+    Order order;
+    List<String> validationErrors;
 
     public ValidationDTO(Order order) {
         this.order = order;

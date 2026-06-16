@@ -31,4 +31,5 @@ public class Pagination {
         sb.append(" ");
         sb.append(sortOrder.getDirection().toString());
         sb.append(", ");
-    }}
+    }
+}

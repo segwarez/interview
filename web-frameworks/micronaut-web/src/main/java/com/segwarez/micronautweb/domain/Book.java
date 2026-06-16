@@ -3,12 +3,10 @@ package com.segwarez.micronautweb.domain;
 import io.micronaut.serde.annotation.Serdeable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Serdeable.Deserializable
 public class Book {

@@ -1,6 +1,5 @@
 package com.segwarez.ruleevaluator.application.rest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.segwarez.ruleevaluator.domain.model.Item;
 import com.segwarez.ruleevaluator.domain.model.Order;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import tools.jackson.databind.ObjectMapper;
 
 import java.util.List;
 

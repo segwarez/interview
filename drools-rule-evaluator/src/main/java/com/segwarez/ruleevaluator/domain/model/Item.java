@@ -9,7 +9,6 @@ import java.math.BigInteger;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 public class Item {
     private BigInteger productId;
