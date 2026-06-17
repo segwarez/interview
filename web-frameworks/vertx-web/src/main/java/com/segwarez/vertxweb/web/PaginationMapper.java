@@ -38,7 +38,7 @@ public class PaginationMapper {
         int lastIndex = elements.length - 1;
         if (sortDirection.isPresent()) lastIndex--;
         for (int i = 0; i <= lastIndex; i++) {
-            sortOrders.add(new SortOrder(elements[i], sortDirection.isPresent() ? sortDirection.get() : SortDirection.ASC));
+            sortOrders.add(new SortOrder(elements[i], sortDirection.orElse(SortDirection.ASC)));
         }
         return sortOrders;
     }

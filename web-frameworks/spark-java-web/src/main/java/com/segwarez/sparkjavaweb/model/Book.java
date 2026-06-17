@@ -1,4 +1,4 @@
-package com.segwarez.vertxrx.service;
+package com.segwarez.sparkjavaweb.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

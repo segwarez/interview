@@ -14,7 +14,6 @@ public class Book {
     private String author;
     private Genre genre;
     private String description;
-
     private boolean published;
 
     public Book(String title, String author, Genre genre, String description, boolean published) {

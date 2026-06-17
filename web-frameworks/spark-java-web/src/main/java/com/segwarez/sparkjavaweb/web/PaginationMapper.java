@@ -1,11 +1,12 @@
-package com.segwarez.vertxrx.web;
+package com.segwarez.sparkjavaweb.web;
 
-import com.segwarez.vertxrx.service.Pagination;
-import com.segwarez.vertxrx.service.SortDirection;
-import com.segwarez.vertxrx.service.SortOrder;
-import io.vertx.rxjava3.ext.web.RoutingContext;
+import com.segwarez.sparkjavaweb.model.Pagination;
+import com.segwarez.sparkjavaweb.model.SortDirection;
+import com.segwarez.sparkjavaweb.model.SortOrder;
+import spark.Request;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,12 +19,14 @@ public class PaginationMapper {
     private PaginationMapper() {
     }
 
-    public static Pagination fromContext(RoutingContext rc) {
+    public static Pagination fromRequest(Request request) {
         var instance = new Pagination();
-        rc.queryParam(PAGE_PARAMETER).forEach(page -> instance.setPageNumber(Integer.parseInt(page)));
-        rc.queryParam(SIZE_PARAMETER).forEach(size -> instance.setPageSize(Integer.parseInt(size)));
+        Optional.ofNullable(request.queryParams(PAGE_PARAMETER))
+                .ifPresent(page -> instance.setPageNumber(Integer.parseInt(page)));
+        Optional.ofNullable(request.queryParams(SIZE_PARAMETER))
+                .ifPresent(size -> instance.setPageSize(Integer.parseInt(size)));
         instance.setSortOrders(
-            rc.queryParam(SORT_PARAMETER).stream()
+                Arrays.stream(Optional.ofNullable(request.queryParamsValues(SORT_PARAMETER)).orElse(new String[0]))
                 .map(PaginationMapper::parseSortOrders)
                 .flatMap(List::stream)
                 .toList()
