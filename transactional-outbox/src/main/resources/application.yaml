@@ -3,7 +3,7 @@ spring:
     name: transactional-outbox
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/post
+    url: jdbc:postgresql://localhost:5432/postdb
     username: postgres
     password: postgres
 

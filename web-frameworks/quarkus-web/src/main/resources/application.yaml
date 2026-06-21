@@ -6,4 +6,4 @@ quarkus:
     username: postgres
     password: postgres
     jdbc:
-      url: jdbc:postgresql://localhost:5432/book
+      url: jdbc:postgresql://localhost:5432/bookdb

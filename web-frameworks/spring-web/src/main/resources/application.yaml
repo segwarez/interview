@@ -10,7 +10,7 @@ spring:
       enabled: true
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/book
+    url: jdbc:postgresql://localhost:5432/bookdb
     username: postgres
     password: postgres
 
