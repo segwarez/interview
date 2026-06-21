@@ -1,0 +1,18 @@
+{
+  "name": "postgres-users-sink",
+  "config": {
+    "connector.class": "io.debezium.connector.jdbc.JdbcSinkConnector",
+    "tasks.max": "1",
+    "topics": "mysql.userdb.users",
+    "connection.url": "jdbc:postgresql://postgres:5432/userdb",
+    "connection.username": "postgres",
+    "connection.password": "postgres",
+    "insert.mode": "upsert",
+    "delete.enabled": "true",
+    "primary.key.mode": "record_key",
+    "primary.key.fields": "id",
+    "schema.evolution": "basic",
+    "database.time_zone": "UTC",
+    "table.name.format": "users"
+  }
+}
