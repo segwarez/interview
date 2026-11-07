@@ -1,0 +1,20 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: perf-https-passthrough
+  namespace: istio-ingress
+spec:
+  hosts:
+    - perf-https.passthrough.segwarez.com
+  gateways:
+    - ingress-tls-passthrough-gateway
+  tls:
+    - match:
+        - port: 443
+          sniHosts:
+            - perf-https.passthrough.segwarez.com
+      route:
+        - destination:
+            host: perf-https.perf-test.svc.cluster.local
+            port:
+              number: 8443

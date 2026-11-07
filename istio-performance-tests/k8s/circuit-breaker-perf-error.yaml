@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: perf-error-circuit-breaker
+  namespace: perf-test
+spec:
+  host: perf-error.perf-test.svc.cluster.local
+  trafficPolicy:
+    connectionPool:
+      tcp:
+        maxConnections: 1
+      http:
+        http1MaxPendingRequests: 1
+        maxRequestsPerConnection: 1
+    outlierDetection:
+      consecutive5xxErrors: 2
+      interval: 5s
+      baseEjectionTime: 30s
+      maxEjectionPercent: 100

@@ -1,0 +1,19 @@
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-perf-error
+  namespace: perf-test
+spec:
+  selector:
+    matchLabels:
+      app: perf-error
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            principals:
+              - cluster.local/ns/perf-test/sa/perf-client
+              - cluster.local/ns/istio-ingress/sa/istio-ingressgateway
+      to:
+        - operation:
+            ports: ["80"]
